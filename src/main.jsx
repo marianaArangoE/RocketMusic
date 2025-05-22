@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import SpotifyLoginView from './routes/SpotifyLoginView';
 import { BrowserRouter,Routes, Route } from 'react-router-dom';
 import LoginView from './routes/LoginView';
 import HomeView from './routes/HomeView';
@@ -11,7 +11,10 @@ import ProfileView from './routes/ProfileView';
 import SignOutView from './routes/SignOutView';
 import PublicProfileView from './routes/PublicProfileView';
 import ChooseUsernameView from './routes/ChooseUsernameView';
-
+import CallbackView from "./routes/CallbackView";
+import MyPlayListView from './routes/MyPlaylistView';
+import SocialView from './routes/SocialView';
+import PlaylistDetailView from "./routes/PlaylistDetailView";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
@@ -23,13 +26,14 @@ root.render(
       <Route path='/profile' element={<ProfileView />} />
       <Route path='/signout' element={<SignOutView />} />
       <Route path='u/:username' element={<PublicProfileView />} />
-      <Route path='choose-username*' element={<ChooseUsernameView />} />
+      <Route path='choose-username' element={<ChooseUsernameView />} />
+      <Route path="/spotify-login" element={<SpotifyLoginView />} />
+      <Route path="/callback" element={<CallbackView />} />
+      <Route path='/my-playlists' element={<MyPlayListView />} />
+      <Route path='/social' element={<SocialView/>} />
+      <Route path="/playlist/:playlistId" element={<PlaylistDetailView />} />
       
     </Routes>
   </BrowserRouter>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
