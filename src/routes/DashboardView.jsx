@@ -1,160 +1,124 @@
 // src/routes/DashboardView.jsx
-
-import { useState, useEffect } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth, db } from "../firebase/Firebase";
-import { doc, getDoc } from "firebase/firestore";
-import { useNavigate } from "react-router-dom"; // 👈 Importa useNavigate arriba del archivo
-
-import axios from "axios";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import useFirebaseAuth from '../hooks/useFirebaseAuth';
+import useSpotifyToken from '../hooks/useSpotifyToken';
+import axios from 'axios';
 
 export default function DashboardView() {
-    const navigate = useNavigate();
-    const [spotifyToken, setSpotifyToken] = useState(null);
-    const [spotifyProfile, setSpotifyProfile] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [randomPlaylists, setRandomPlaylists] = useState([]);
+  const navigate = useNavigate();
+  const { user, loading: authLoading } = useFirebaseAuth();
+  const { token: spotifyToken, login: redirectToSpotifyLogin } = useSpotifyToken();
 
-    // Obtener token de usuario desde Firestore
-    useEffect(() => {
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                const ref = doc(db, "users", user.uid);
-                const snap = await getDoc(ref);
-                if (snap.exists()) {
-                    const token = snap.data().spotifyToken;
-                    setSpotifyToken(token);
-                } else {
-                    console.warn("⚠️ Usuario no encontrado en Firestore.");
-                }
-            } else {
-                console.warn("⚠️ Usuario no autenticado.");
-            }
-        });
-    }, []);
+  const [spotifyProfile, setSpotifyProfile] = React.useState(null);
+  const [randomPlaylists, setRandomPlaylists] = React.useState([]);
+  const [loadingData, setLoadingData] = React.useState(true);
+  const [error, setError] = React.useState(null);
 
-    // Obtener perfil de Spotify
-    useEffect(() => {
-        const fetchSpotifyProfile = async () => {
-            if (!spotifyToken) return;
-            try {
-                const res = await axios.get("https://api.spotify.com/v1/me", {
-                    headers: {
-                        Authorization: `Bearer ${spotifyToken}`,
-                    },
-                });
-                setSpotifyProfile(res.data);
-            } catch (error) {
-                if (error.response?.status === 401) {
-                    console.warn("⛔ Token inválido o expirado. Redirigiendo a Spotify...");
-                    localStorage.removeItem("spotify_token");
-                    redirectToSpotifyLogin();
-                } else {
-                    console.error("❌ Error al obtener perfil de Spotify:", error);
-                }
-            } finally {
-                setLoading(false);
-            }
-        };
+  // 1. Si no hay usuario en Firebase, redirijo a /login
+  React.useEffect(() => {
+    if (!authLoading && !user) {
+      navigate('/login');
+    }
+  }, [authLoading, user, navigate]);
 
-        fetchSpotifyProfile();
-    }, [spotifyToken]);
-
-    // Hardcodear una playlist pública para mostrar
-    useEffect(() => {
-        const fetchNewReleases = async () => {
-            if (!spotifyToken) return;
-
-            try {
-                console.log("🎟️ Usando token para new releases:", spotifyToken);
-
-                const response = await axios.get(
-                    "https://api.spotify.com/v1/browse/new-releases?limit=5",
-                    {
-                        headers: {
-                            Authorization: `Bearer ${spotifyToken}`,
-                        },
-                    }
-                );
-
-                const albums = response.data.albums?.items || [];
-                setRandomPlaylists(albums);
-            } catch (error) {
-                console.error("❌ Error al traer nuevos lanzamientos:", error);
-            }
-        };
-
-        fetchNewReleases();
-    }, [spotifyToken]);
-
-
-    function redirectToSpotifyLogin() {
-        const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
-        const REDIRECT_URI = import.meta.env.VITE_SPOTIFY_REDIRECT_URI;
-
-        const codeVerifier = generateRandomString(128);
-        generateCodeChallenge(codeVerifier).then((codeChallenge) => {
-            localStorage.setItem("spotify_code_verifier", codeVerifier);
-
-            const params = new URLSearchParams({
-                client_id: CLIENT_ID,
-                response_type: "code",
-                redirect_uri: REDIRECT_URI,
-                code_challenge_method: "S256",
-                code_challenge: codeChallenge,
-                scope: "user-read-email playlist-read-private playlist-read-collaborative",
-
-            });
-
-            window.location.href = `https://accounts.spotify.com/authorize?${params.toString()}`;
-        });
+  // 2. Cuando tenga token, traigo perfil y playlists
+  React.useEffect(() => {
+    if (!spotifyToken) {
+      setLoadingData(false);
+      return;
     }
 
-    function generateRandomString(length) {
-        const charset =
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        let result = "";
-        const values = window.crypto.getRandomValues(new Uint32Array(length));
-        for (let i = 0; i < length; i++) {
-            result += charset[values[i] % charset.length];
+    setLoadingData(true);
+    const headers = { Authorization: `Bearer ${spotifyToken}` };
+
+    // Función async para fetch
+    (async () => {
+      try {
+        // Perfil
+        const { data: profileData } = await axios.get(
+          'https://api.spotify.com/v1/me',
+          { headers }
+        );
+        setSpotifyProfile(profileData);
+
+        // Nuevos lanzamientos (destacados)
+        const { data: releasesData } = await axios.get(
+          'https://api.spotify.com/v1/browse/new-releases?limit=5',
+          { headers }
+        );
+        setRandomPlaylists(releasesData.albums.items || []);
+      } catch (err) {
+        if (err.response?.status === 401) {
+          // token inválido o expirado
+          localStorage.removeItem('spotify_token');
+          redirectToSpotifyLogin();
+        } else {
+          console.error('Error al cargar datos de Spotify:', err);
+          setError(err);
         }
-        return result;
-    }
+      } finally {
+        setLoadingData(false);
+      }
+    })();
+  }, [spotifyToken, redirectToSpotifyLogin]);
 
-    async function generateCodeChallenge(codeVerifier) {
-        const encoder = new TextEncoder();
-        const data = encoder.encode(codeVerifier);
-        const digest = await window.crypto.subtle.digest("SHA-256", data);
-        return btoa(String.fromCharCode(...new Uint8Array(digest)))
-            .replace(/\+/g, "-")
-            .replace(/\//g, "_")
-            .replace(/=+$/, "");
-    }
+  // 3. UI de loading / error
+  if (authLoading || loadingData) {
+    return <p>Cargando dashboard…</p>;
+  }
 
-    if (loading) return <p>Cargando perfil de Spotify...</p>;
-    if (!spotifyProfile)
-        return <p>No se pudo obtener el perfil de Spotify. ¿Estás vinculado?</p>;
-
+  if (!spotifyToken) {
     return (
-        <div>
-            <h1>🎧 Bienvenido/a, {spotifyProfile.display_name}</h1>
-                 <button onClick={() => navigate("/profile")}>👤 Ir a mi perfil</button>
-
-            <h2>🎲 Playlist destacada</h2>
-            {randomPlaylists.length === 0 ? (
-                <p>No se pudieron cargar las playlists.</p>
-            ) : (
-                randomPlaylists.map((album) => (
-                    <div key={album.id}>
-                        <img src={album.images[0]?.url} alt="cover" width={150} />
-                        <h3>{album.name}</h3>
-                        <a href={album.external_urls.spotify} target="_blank" rel="noreferrer">
-                            ➕ Escuchar en Spotify
-                        </a>
-                    </div>
-                ))
-            )}
-
-        </div>
+      <div>
+        <p>No tienes un token de Spotify.</p>
+        <button onClick={redirectToSpotifyLogin}>
+          Vincular Spotify
+        </button>
+      </div>
     );
+  }
+
+  if (error || !spotifyProfile) {
+    return (
+      <div>
+        <p>Hubo un error al obtener tu perfil de Spotify.</p>
+        <button onClick={redirectToSpotifyLogin}>
+          Reintentar Vinculación
+        </button>
+      </div>
+    );
+  }
+
+  // 4. Render principal
+  return (
+    <div>
+      <h1>🎧 Bienvenido/a, {spotifyProfile.display_name}</h1>
+      <button onClick={() => navigate('/profile')}>👤 Mi perfil</button>
+
+      <h2>🎲 Playlists Destacadas</h2>
+      {randomPlaylists.length === 0 ? (
+        <p>No hay playlists para mostrar.</p>
+      ) : (
+        randomPlaylists.map((album) => (
+          <div key={album.id} style={{ marginBottom: 20 }}>
+            <img
+              src={album.images[0]?.url}
+              alt={album.name}
+              width={150}
+              height={150}
+            />
+            <h3>{album.name}</h3>
+            <a
+              href={album.external_urls.spotify}
+              target="_blank"
+              rel="noreferrer"
+            >
+              ➕ Escuchar en Spotify
+            </a>
+          </div>
+        ))
+      )}
+    </div>
+  );
 }

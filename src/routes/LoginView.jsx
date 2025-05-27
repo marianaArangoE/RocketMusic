@@ -1,74 +1,35 @@
-import { use, useState } from 'react';
-import { auth, userExist } from '../firebase/Firebase';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
-
-import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
-import AuthProvider from '../components/authProvider';
-
-
+import useFirebaseAuth from '../hooks/useFirebaseAuth';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from '../firebase/Firebase';
 
 export default function LogingView() {
-    const navigate = useNavigate();
-    //const [currentUser, setCurrentUser] = useState(null);
-    const [state, setCurrentState] = useState(0);
+  const { user, loading } = useFirebaseAuth();
+  const navigate = useNavigate();
 
-    async function handleOnclick() {
-        const googleProvider = new GoogleAuthProvider();
-        await signqWithGoogle(googleProvider);
+  React.useEffect(() => {
+    if (!loading) {
+      if (user) navigate('/dashboard');
+      else      navigate('/login');
+    }
+  }, [user, loading, navigate]);
 
+  const handleOnclick = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      await signInWithPopup(auth, provider);
+      // onAuthStateChanged en el hook se encargará de navegar
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-        async function signqWithGoogle(googleAuthProvider) {
-            try {
-                const result = await signInWithPopup(auth, googleAuthProvider);
-                console.log(result);
-                const user = result.user;
-                console.log(user);
-            } catch (error) {
-                console.error(error);
+  if (loading) return <div>Loading...</div>;
 
-            }
-        }
-
-    }
-
-    function handleUserLoggedIn(user) {
-        navigate('/dashboard');
-    }
-    function handleUserNotLoggedIn(user) {
-        navigate('/login');
-        setCurrentState(4);
-    }
-    function handleUserNotRegistered(user) {
-        navigate('/choose-username');
-    }
-
-    if (state === 1) {
-        return <div>Loading...</div>;
-    }
-    if (state === 2) {
-        return <div>Login Complete</div>;
-    }
-    if (state === 3) {
-        return <div>Login without registry</div>;
-    }
-    if (state === 4) {
-        return (
-            <div >
-                <button onClick={handleOnclick}>Login with google</button>
-            </div>
-        );
-    }
-
-    return (
-        <AuthProvider
-            onUserLoggedIn={handleUserLoggedIn}
-            onUserNotLoggedIn={handleUserNotLoggedIn}
-            onUserNotRegistered={handleUserNotRegistered}>
-            <div>Loading...</div>
-        </AuthProvider>
-    );
+  return (
+    <div>
+      <button onClick={handleOnclick}>Login with Google</button>
+    </div>
+  );
 }
-
-
