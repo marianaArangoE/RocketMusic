@@ -34,7 +34,7 @@ export default function useSpotifyToken() {
       redirect_uri: REDIRECT_URI,
       code_challenge_method: 'S256',
       code_challenge: challenge,
-      scope: 'user-read-email playlist-read-private user-top-read user-read-recently-played',
+      scope: 'user-read-email playlist-read-private user-top-read user-read-recently-played playlist-read-collaborative user-follow-read user-follow-modify',
     });
     window.location.href = `https://accounts.spotify.com/authorize?${params}`;
   }, []);

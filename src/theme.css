@@ -1,0 +1,47 @@
+/* src/styles/theme.css */
+
+/* Variables Gengar */
+:root {
+  --gengar-purple:   #483D8B;
+  --gengar-shadow:   #2F2383;
+  --gengar-accent:   #9B59B6;
+  --gengar-text:     #E0DAF5;
+}
+
+/* Modo oscuro */
+body.dark-mode {
+  background-color: var(--gengar-shadow) !important;
+  color:            var(--gengar-text)   !important;
+}
+
+/* Header personalizado */
+.header-rocket {
+  background-color: var(--gengar-purple);
+  padding: 1rem;
+  border-bottom: 2px solid var(--gengar-accent);
+}
+
+/* Nav links */
+.nav-rocket a {
+  color: var(--gengar-text);
+  margin-right: 1rem;
+}
+.nav-rocket a:hover {
+  color: var(--gengar-accent);
+}
+
+/* Main */
+.main-rocket {
+  padding: 2rem;
+}
+
+/* Botones */
+.btn-rocket {
+  background-color: var(--gengar-accent);
+  color: var(--gengar-text);
+  border: none;
+}
+.btn-rocket:hover {
+  background-color: var(--gengar-text);
+  color: var(--gengar-purple);
+}

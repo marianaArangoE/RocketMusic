@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './theme.css'
 import './index.css';
 import App from './App';
 import SpotifyLoginView from './routes/SpotifyLoginView';
@@ -15,6 +17,7 @@ import CallbackView from "./routes/CallbackView";
 import MyPlayListView from './routes/MyPlaylistView';
 import SocialView from './routes/SocialView';
 import PlaylistDetailView from "./routes/PlaylistDetailView";
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>

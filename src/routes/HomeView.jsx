@@ -1,34 +1,54 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useFirebaseAuth from '../hooks/useFirebaseAuth';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { auth } from '../firebase/Firebase';
+import useSpotifyToken from '../hooks/useSpotifyToken';
 
-export default function LogingView() {
-  const { user, loading } = useFirebaseAuth();
+export default function HomeView() {
   const navigate = useNavigate();
+  const { user, loading: authLoading } = useFirebaseAuth();
+  const { token: spotifyToken, login: redirectToSpotifyLogin } = useSpotifyToken();
 
-  React.useEffect(() => {
-    if (!loading) {
-      if (user) navigate('/dashboard');
-      else      navigate('/login');
-    }
-  }, [user, loading, navigate]);
+  if (authLoading) return <p>Cargando…</p>;
 
-  const handleOnclick = async () => {
-    const provider = new GoogleAuthProvider();
-    try {
-      await signInWithPopup(auth, provider);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  const isLoggedIn = !!user && !!spotifyToken;
 
-  if (loading) return <div>Loading...</div>;
-
-  return (
-    <div>
-      <button onClick={handleOnclick}>Login with Google</button>
-    </div>
-  );
+  if (isLoggedIn) {
+    return (
+      <div className="dark-mode">
+        <header className="header-rocket">
+          <nav className="nav-rocket">
+            <Link to="/dashboard">Dashboard</Link>
+            <Link to="/my-playlists">Mis Playlists</Link>
+            <Link to="/social">Social</Link>
+            <Link to="/signout">Cerrar Sesión</Link>
+          </nav>
+        </header>
+        <main className="main-rocket">
+          <h1>¡Bienvenido de nuevo, {user.displayName || 'usuario'}!</h1>
+          <p>Usa el menú de arriba para navegar.</p>
+        </main>
+      </div>
+    );
+  } else {
+    return (
+      <div className="text-center mt-5 dark-mode">
+        <h1>Bienvenido a SpotifyApp</h1>
+        <p>Inicia sesión para comenzar a explorar tus playlists y descubrir nuevos curadores.</p>
+        <div className="mt-4">
+          <button
+            onClick={redirectToSpotifyLogin}
+            className="btn btn-rocket me-2"
+          >
+            Iniciar sesión con Spotify
+          </button>
+          <button
+            onClick={() => navigate('/signup')}
+            className="btn btn-rocket"
+          >
+            Crear cuenta
+          </button>
+        </div>
+      </div>
+    );
+  }
 }
