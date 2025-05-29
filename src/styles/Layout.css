@@ -1,0 +1,45 @@
+.nav-rocket {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  background: transparent;
+  padding: 1rem 2rem;
+  z-index: 2;
+}
+
+/* Contenedor de botones */
+.nav-button-container {
+  display: flex;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  justify-content: space-around;
+  align-items: center;
+}
+
+/* Botones de texto más grandes */
+.nav-button {
+  background: transparent;
+  border: none;
+  padding: 0.75rem 1.5rem;   /* mayor padding */
+  color: #fff !important;
+  text-transform: uppercase;
+  font-size: 1rem;           /* tamaño de fuente un poco mayor */
+  cursor: pointer;
+  transition: color 0.4s ease, transform 0.4s ease; /* transición suave */
+}
+
+/* Hover suave: cambia color y levanta ligeramente */
+.nav-button:hover {
+  color: #00ff99;
+  transform: translateY(-2px);
+}
+
+/* Limpieza de estilos por defecto de Nav.Link */
+.nav-rocket .nav-link {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}

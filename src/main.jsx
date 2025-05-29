@@ -6,9 +6,9 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import './theme.css';
 import './index.css';
+import Layout from './uicomponents/Layout';
+import './styles/Layout.css';
 
-import { ThemeProvider } from './hooks/ThemeContext';   // 📌 ruta correcta
-import App from './App';
 import SpotifyLoginView from './routes/SpotifyLoginView';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LoginView from './routes/LoginView';
@@ -25,23 +25,32 @@ import PlaylistDetailView from './routes/PlaylistDetailView';
 
 function Root() {
   return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/*" element={<App />} />
-          <Route path="/home" element={<HomeView />} />
-          <Route path="/login" element={<LoginView />} />
-          <Route path="/dashboard" element={<DashboardView />} />
-          <Route path="/profile" element={<ProfileView />} />
-          <Route path="/signout" element={<SignOutView />} />
-          <Route path="u/:username" element={<PublicProfileView />} />
-          <Route path="choose-username" element={<ChooseUsernameView />} />
-          <Route path="/spotify-login" element={<SpotifyLoginView />} />
-          <Route path="/callback" element={<CallbackView />} />
-          <Route path="/my-playlists" element={<MyPlayListView />} />
-          <Route path="/social" element={<SocialView />} />
-          <Route path="/playlist/:playlistId" element={<PlaylistDetailView />} />
-        </Routes>
-      </BrowserRouter>
+<BrowserRouter>
+  <Routes>
+    {/* Este Route padre envuelve TODO lo que esté bajo “/” */}
+    <Route path="/" element={<Layout />}>
+      {/* index equivale a “/” */}
+      <Route index element={<HomeView />} />
+      <Route path="home" element={<HomeView />} />
+      <Route path="dashboard" element={<DashboardView />} />
+      <Route path="profile" element={<ProfileView />} />
+      <Route path="signout" element={<SignOutView />} />
+      <Route path="my-playlists" element={<MyPlayListView />} />
+      <Route path="social" element={<SocialView />} />
+      <Route path="playlist/:playlistId" element={<PlaylistDetailView />} />
+      <Route path="u/:username" element={<PublicProfileView />} />
+      <Route path="choose-username" element={<ChooseUsernameView />} />
+    </Route>
+
+    {/* Rutas públicas fuera de Layout */}
+    <Route path="login" element={<LoginView />} />
+    <Route path="spotify-login" element={<SpotifyLoginView />} />
+    <Route path="callback" element={<CallbackView />} />
+
+    {/* Cualquier otra ruta redirige a home */}
+    <Route path="*" element={<HomeView />} />
+  </Routes>
+</BrowserRouter>
   );
 }
 

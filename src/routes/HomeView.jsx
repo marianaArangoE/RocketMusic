@@ -4,7 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import useFirebaseAuth from '../hooks/useFirebaseAuth';
 import useSpotifyToken from '../hooks/useSpotifyToken';
 import gengarGif from '../uiResources/gengar.gif';
-import '../styles/Home.css'; 
+import pokeballIcon from '../uiResources/pokebutton.png';
+import '../styles/Home.css';
 import { Container, Row, Col, Button, ToggleButton, Nav, Card } from 'react-bootstrap';
 export default function HomeView() {
   const navigate = useNavigate();
@@ -29,55 +30,31 @@ export default function HomeView() {
     );
   }
   return (
-    <Container fluid className="home-container"> 
-      <Nav
-        className="nav-rocket"
-        variant="tabs"
-        defaultActiveKey="/home"
-      >
-        <Nav.Item>
-          <Nav.Link as={Link} to="/home">
-            HOME
-          </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link as={Link} to="/dashboard">
-            DASHBOARD
-          </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link as={Link} to="/my-playlists">
-            MY PLAYLISTS
-          </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link as={Link} to="/social">
-            SOCIAL
-          </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link as={Link} to="/profile">
-            PROFILE
-          </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link as={Link} to="/signout">
-            SIGN OUT
-          </Nav.Link>
-        </Nav.Item>
-      </Nav>
-
+    <Container fluid className="home-container">
+      
       <Row className="home-row">
         <Col md={{ span: 8, offset: 2 }}>
           <div className="welcome-box d-flex align-items-center justify-content-between">
             <div>
-              <h1 className="welcome-text">
+              <h1 className="welcome-text typing-container">
                 Bienvenido al cuartel del Equipo Rocket
               </h1>
-              <p className="welcome-subtext">
+              <p className="welcome-subtext ">
                 ¡Prepárate para capturar toda la música!
               </p>
+
+              <div className="loader pokeball-loader">
+                <Button
+                  variant="link"
+                  onClick={() => navigate('/dashboard')}
+                  className="pokeball-btn mt-3"
+                >
+                  <img src={pokeballIcon} alt="Ir al Dashboard" />
+                </Button>
+              </div>
             </div>
+
+
             <Card className="gengar-card">
               <Card.Img
                 className="gengar-img"

@@ -1,14 +1,29 @@
-.nav-rocket {
-  background-color: #2D2A5E;  /* gengar-purple */
-  padding: 0.5rem 1rem;
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Source Code Pro', monospace;
+
+  /* aquí el fondo fijo */
+  background-image: url('/src/uiResources/idk.png');
+  background-size: cover;           /* cubre toda la pantalla */
+  background-position: center;      /* centrado */
+  background-repeat: no-repeat;
+  background-attachment: fixed;     /* ¡fijo al viewport, no se mueve! */
 }
 
-.nav-rocket .nav-link {
-  color: #F8CFE8;            /* jigglypuff-pink */
+/* capa oscura encima */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  pointer-events: none;
+  z-index: 0;
 }
 
-.nav-rocket .nav-link.active {
-  background-color: #6B5B95;
-  color: #ffffff;
-  border-radius: 0.25rem;
+/* hacemos transparentes todos los containers de Bootstrap */
+.container, .container-fluid, .home-container {
+  background: transparent !important;
+  z-index: 1; /* sobre la capa oscura */
 }
