@@ -1,15 +1,38 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&display=swap');
 
+
+body.theme-dark {
+  --bg-color: #181818;
+  --text-color: #f1f1f1;
+  --nav-bg: #23272f;
+  --nav-btn-bg: #333;
+  --nav-btn-color: #fff;
+  background-image: url('/src/uiResources/idk.png');
+}
+
+body.theme-light {
+  --bg-color: #f9f9f9;
+  --text-color: #222;
+  --nav-bg: #fff;
+  --nav-btn-bg: #eaeaea;
+  --nav-btn-color: #222;
+  background-image: url('/src/uiResources/background.jpg');
+}
+
+
 body {
   margin: 0;
   font-family: 'Source Code Pro', monospace;
 
   /* aquí el fondo fijo */
-  background-image: url('/src/uiResources/idk.png');
-  background-size: cover;           /* cubre toda la pantalla */
-  background-position: center;      /* centrado */
+  /* background-image: url('/src/uiResources/idk.png'); */
+  background-size: cover;
+  /* cubre toda la pantalla */
+  background-position: center;
+  /* centrado */
   background-repeat: no-repeat;
-  background-attachment: fixed;     /* ¡fijo al viewport, no se mueve! */
+  background-attachment: fixed;
+  /* ¡fijo al viewport, no se mueve! */
 }
 
 /* capa oscura encima */
@@ -17,13 +40,16 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.7);
   pointer-events: none;
   z-index: 0;
 }
 
 /* hacemos transparentes todos los containers de Bootstrap */
-.container, .container-fluid, .home-container {
+.container,
+.container-fluid,
+.home-container {
   background: transparent !important;
-  z-index: 1; /* sobre la capa oscura */
+  z-index: 1;
+  /* sobre la capa oscura */
 }

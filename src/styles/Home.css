@@ -9,12 +9,16 @@ body, .home-container, .nav-rocket, .welcome-box, .welcome-text, .welcome-subtex
 
 /* Contenedor general */
 .home-container {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* centra verticalmente */
+  align-items: center;     /* centra horizontalmente */
   min-height: 100vh;
-  background-image: url('../uiResources/idk.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  padding-top: 4rem; /* igual o mayor a la altura de la navbar */
+  box-sizing: border-box;
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 0;
 }
 /* .home-container::before {
   content: "";
@@ -31,7 +35,7 @@ body, .home-container, .nav-rocket, .welcome-box, .welcome-text, .welcome-subtex
 
 /* Navbar */
 .nav-rocket {
-  position: absolute;
+  position: fixed;
   top: 0; left: 0; right: 0;
   background: transparent;
   padding: 1rem 2rem;
@@ -80,7 +84,7 @@ body, .home-container, .nav-rocket, .welcome-box, .welcome-text, .welcome-subtex
 .home-row {
   display: flex;
   align-items: center;
-  padding: 6rem 2rem 2rem;
+  padding: 0; /* Elimina el padding-top extra */
 }
 
 /* Caja de bienvenida */
@@ -88,9 +92,9 @@ body, .home-container, .nav-rocket, .welcome-box, .welcome-text, .welcome-subtex
   position: relative;
   z-index: 2; /* por delante de Gengar */
   background: rgba(255,255,255,0.2);
-  padding: 4rem;
+  padding: 2rem;
   border-radius: 2rem;
-  margin: 6rem 2rem 2rem;
+  margin: 2rem 0 0 0;
   overflow: visible;
   
   display: flex;

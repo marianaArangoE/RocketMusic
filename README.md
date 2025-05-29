@@ -1,70 +1,47 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<div align="center">
 
-## Available Scripts
 
-In the project directory, you can run:
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+![React](https://img.shields.io/badge/React-18.2.0-61DAFB?style=for-the-badge&logo=react&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-6.3.5-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3.3-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
+![Firebase Functions](https://img.shields.io/badge/Firebase_Functions-Cloud_Functions-FFCA28?style=for-the-badge&logo=firebase&logoColor=white)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<br />
 
-### `npm test`
+![Static Badge](https://img.shields.io/badge/status-online-brightgreen?style=for-the-badge) \
+![Pokémon Theme](https://img.shields.io/badge/Theme-Pokémon-yellow?style=for-the-badge)
+![Inspired by Spotify](https://img.shields.io/badge/Inspired%20By-Spotify-1DB954?logo=spotify&logoColor=white&style=for-the-badge) 
+[![Live](https://img.shields.io/badge/Ver%20App-Online-success?style=for-the-badge)](https://pokemusic-66466.web.app/)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+</div>
 
-### `npm run build`
+# Proyecto Poke-Music `Clon Spotify`
+**Poke-Music** es una plataforma web inspirada en Spotify, con temática Pokémon. Permite a los usuarios autenticarse mediante Firebase y escuchar música utilizando la API de Spotify. El proyecto utiliza React, Vite y Bootstrap para la interfaz, y aprovecha las funciones de Firebase para la autenticación y el backend.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Ejecucion en local
+  Primero se debe instalar y configurar los componentes de forma global
+  ```bash
+    npm install -g firebase-tools 
+    firebase login
+  ```
+  Despues de este paso se debe loguearse con la cuenta vinculada al proyecto de firebase
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Desarrollador
+```bash
+npm run build
+firebase deploy --only hosting
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+> [!IMPORTANT]
+> **IMPORTANTE:**  
+> 1. Debes iniciar sesión con una cuenta que tenga permisos en el proyecto de Firebase.  
+> 2. Además, para que la autenticación y los servicios de Spotify funcionen correctamente, la cuenta y las URLs deben estar autorizadas en la consola de Firebase y en la configuración de la API de Spotify.
