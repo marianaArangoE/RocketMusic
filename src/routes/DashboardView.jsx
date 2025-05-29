@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import useFirebaseAuth from '../hooks/useFirebaseAuth';
 import useSpotifyToken from '../hooks/useSpotifyToken';
 import axios from 'axios';
+import mimikyuIcon from '../uiResources/mimikyu.png';
+import '../styles/Dashboard.css';
 
 export default function DashboardView() {
   const navigate = useNavigate();
@@ -15,109 +17,131 @@ export default function DashboardView() {
   const [loadingData, setLoadingData] = React.useState(true);
   const [error, setError] = React.useState(null);
 
-  // 1. Si no hay usuario en Firebase, redirijo a /login
+  // 1. Si no hay usuario, redirigir
   React.useEffect(() => {
-    if (!authLoading && !user) {
-      navigate('/login');
-    }
+    if (!authLoading && !user) navigate('/login');
   }, [authLoading, user, navigate]);
 
-  // 2. Cuando tenga token, traigo perfil y playlists
-  React.useEffect(() => {
+  // 2. Función para cargar perfil y lanzamientos
+  const loadDashboardData = React.useCallback(async () => {
     if (!spotifyToken) {
       setLoadingData(false);
       return;
     }
-
     setLoadingData(true);
-    const headers = { Authorization: `Bearer ${spotifyToken}` };
+    setError(null);
 
-    // Función async para fetch
-    (async () => {
-      try {
-        // Perfil
-        const { data: profileData } = await axios.get(
-          'https://api.spotify.com/v1/me',
-          { headers }
-        );
-        setSpotifyProfile(profileData);
+    try {
+      // 2.1. Perfil
+      const { data: profileData } = await axios.get(
+        'https://api.spotify.com/v1/me',
+        { headers: { Authorization: `Bearer ${spotifyToken}` } }
+      );
+      setSpotifyProfile(profileData);
 
-        // Nuevos lanzamientos (destacados)
-        const { data: releasesData } = await axios.get(
-          'https://api.spotify.com/v1/browse/new-releases?limit=5',
-          { headers }
-        );
-        setRandomPlaylists(releasesData.albums.items || []);
-      } catch (err) {
-        if (err.response?.status === 401) {
-          // token inválido o expirado
-          localStorage.removeItem('spotify_token');
-          redirectToSpotifyLogin();
-        } else {
-          console.error('Error al cargar datos de Spotify:', err);
-          setError(err);
-        }
-      } finally {
-        setLoadingData(false);
+      // 2.2. Nuevos lanzamientos (pedimos más para mezclar)
+      const { data: releasesData } = await axios.get(
+        'https://api.spotify.com/v1/browse/new-releases?limit=',
+        { headers: { Authorization: `Bearer ${spotifyToken}` } }
+      );
+      const items = releasesData.albums.items || [];
+
+      // 2.3. Mezclar con Fisher–Yates
+      for (let i = items.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [items[i], items[j]] = [items[j], items[i]];
       }
-    })();
+
+      // 2.4. Tomar sólo 8
+      setRandomPlaylists(items.slice(0, 6));
+    } catch (err) {
+      if (err.response?.status === 401) {
+        localStorage.removeItem('spotify_token');
+        redirectToSpotifyLogin();
+      } else {
+        console.error('Error al cargar datos de Spotify:', err);
+        setError(err);
+      }
+    } finally {
+      setLoadingData(false);
+    }
   }, [spotifyToken, redirectToSpotifyLogin]);
 
-  // 3. UI de loading / error
-  if (authLoading || loadingData) {
-    return <p>Cargando dashboard…</p>;
-  }
+  // 3. Al montar, y al refrescar, cargamos
+  React.useEffect(() => {
+    loadDashboardData();
+  }, [loadDashboardData]);
 
+  // 4. Estados de carga / error / sin token
+  if (authLoading || loadingData) {
+    return <p className="text-center mt-5">Cargando dashboard…</p>;
+  }
   if (!spotifyToken) {
     return (
-      <div>
+      <div className="text-center mt-5">
         <p>No tienes un token de Spotify.</p>
-        <button onClick={redirectToSpotifyLogin}>
+        <button onClick={redirectToSpotifyLogin} className="btn btn-primary">
           Vincular Spotify
         </button>
       </div>
     );
   }
-
   if (error || !spotifyProfile) {
     return (
-      <div>
+      <div className="text-center mt-5">
         <p>Hubo un error al obtener tu perfil de Spotify.</p>
-        <button onClick={redirectToSpotifyLogin}>
+        <button onClick={redirectToSpotifyLogin} className="btn btn-primary">
           Reintentar Vinculación
         </button>
       </div>
     );
   }
 
-  // 4. Render principal
+  // 5. Render principal
   return (
-    <div>
-      <h1>🎧 Bienvenido/a, {spotifyProfile.display_name}</h1>
-      <button onClick={() => navigate('/profile')}>👤 Mi perfil</button>
+    <div className="dashboard-content">
+    <h1>
+       <img
+         src={mimikyuIcon}
+         alt="Mimikyu"
+         className="mimikyu-icon"
+       />
+       Bienvenido/a, {spotifyProfile.display_name}
+     </h1>
+      <div className="dashboard-controls" style={{ marginBottom: '1rem', display: 'flex', gap: '1rem' }}>
+        <button className="fancy-button" onClick={loadDashboardData}>
+          🔄 Actualizar
+          <span className="hoverEffect">
+            <div />
+          </span>
+
+          {/* {loadingData ? 'Cargando…' : 'Actualizar'} */}
+        </button>
+      </div>
 
       <h2>🎲 Playlists Destacadas</h2>
       {randomPlaylists.length === 0 ? (
         <p>No hay playlists para mostrar.</p>
       ) : (
-        randomPlaylists.map((album) => (
-          <div key={album.id} style={{ marginBottom: 20 }}>
-            <img
-              src={album.images[0]?.url}
-              alt={album.name}
-              width={150}
-              height={150}
-            />
-            <h3>{album.name}</h3>
-            <a
-              href={album.external_urls.spotify}
-              target="_blank"
-              rel="noreferrer"
+        <div className="dash-cards-container">
+          {randomPlaylists.map(album => (
+            <div
+              key={album.id}
+              className="dash-card"
+              onClick={() => window.open(album.external_urls.spotify, '_blank')}
             >
-              ➕ Escuchar en Spotify
-            </a>
-          </div>
-        ))
+              <img src={album.images[0]?.url} alt={album.name} />
+              <h3>{album.name}</h3>
+              <a
+                href={album.external_urls.spotify}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Escuchar →
+              </a>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
