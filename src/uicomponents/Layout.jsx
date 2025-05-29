@@ -1,11 +1,14 @@
 // src/uicomponents/Layout.jsx
-import React from 'react';
+import React, { useContext } from 'react'; // <-- agrega useContext
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { Nav } from 'react-bootstrap';
 import '../styles/Layout.css';  // donde tienes .home-container
+import { ThemeContext } from '../hooks/ThemeContext';
+
 
 export default function Layout() {
   const navigate = useNavigate();
+  const { dark, toggle } = useContext(ThemeContext); // <-- usa el contexto
 
   return (
     <>
@@ -18,6 +21,17 @@ export default function Layout() {
           <button className="nav-button" onClick={() => navigate('/social')}>Social</button>
           <button className="nav-button" onClick={() => navigate('/profile')}>Profile</button>
           <button className="nav-button" onClick={() => navigate('/signout')}>Sign Out</button>
+
+          <button
+            className="nav-button"
+            onClick={toggle}
+            title="Cambiar tema"
+            style={{ fontWeight: 'bold' }}
+          >
+            {dark ? '🌙 Oscuro' : '☀️ Claro'}
+          </button>
+
+          
         </div>
       </Nav>
 

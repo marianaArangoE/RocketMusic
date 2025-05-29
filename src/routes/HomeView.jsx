@@ -1,5 +1,9 @@
 // src/routes/HomeView.jsx
-import React, { useContext } from 'react';
+import React, { useState, useEffect } from "react";
+import TrackVisibility from 'react-on-screen';
+import { ReactTyped } from "react-typed";
+
+
 import { Link, useNavigate } from 'react-router-dom';
 import useFirebaseAuth from '../hooks/useFirebaseAuth';
 import useSpotifyToken from '../hooks/useSpotifyToken';
@@ -11,7 +15,6 @@ export default function HomeView() {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useFirebaseAuth();
   const { token: spotifyToken, login: redirectToSpotifyLogin } = useSpotifyToken();
-
 
   if (authLoading) {
     return <p className="text-center mt-5">Cargando…</p>;
@@ -31,7 +34,7 @@ export default function HomeView() {
   }
   return (
     <Container fluid className="home-container">
-      
+
       <Row className="home-row">
         <Col md={{ span: 8, offset: 2 }}>
           <div className="welcome-box d-flex align-items-center justify-content-between">
@@ -39,9 +42,27 @@ export default function HomeView() {
               <h1 className="welcome-text typing-container">
                 Bienvenido al cuartel del Equipo Rocket
               </h1>
-              <p className="welcome-subtext ">
+              {/* <p className="welcome-subtext ">
                 ¡Prepárate para capturar toda la música!
-              </p>
+              </p> */}
+
+
+
+
+              <TrackVisibility>
+                {({ isVisible }) =>
+                  <div className={`animate__animated ${isVisible ? 'animate__fadeIn' : ''}`}>
+                    <p className="welcome-subtext "> {""}<br></br>
+                      <ReactTyped
+                        strings={["¡Prepárate para capturar toda la música!", "¡Atrapa todas tus canciones favoritas!", "¡Hazte con todas… las playlists!"]}
+                        typeSpeed={100} loop backSpeed={50}
+                        className="current-text"
+                        // style={{ whiteSpace: 'pre-line', fontSize: '2em' }}
+                      />
+                    </p>
+                  </div>
+                }
+              </TrackVisibility>
 
               <div className="loader pokeball-loader">
                 <Button
