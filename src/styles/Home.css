@@ -1,0 +1,86 @@
+
+.home-container {
+  position: relative;
+  min-height: 100vh;
+  background-image: url('../uiResources/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.home-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 0;
+}
+
+.home-container > * {
+  position: relative;
+  z-index: 1;
+}
+
+.nav-rocket {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  background: transparent;
+  padding: 1rem 2rem;
+  z-index: 2;
+}
+
+.nav-rocket .nav-link {
+  color: #fff !important;
+  margin-right: 1rem;
+}
+
+
+.home-row {
+  display: flex;
+  align-items: center;
+  padding: 6rem 2rem 2rem; 
+}
+
+.welcome-box {
+  background: rgba(255,255,255,0.2);
+  padding: 6rem 4rem;
+  border-radius: 2rem;
+  /* LE añadimos un width para agrandar el recuadro */
+  width: 90%;           /* ocupa el 90% del ancho del row */
+  max-width: 1000px;    /* no crece más de 1000px */
+  margin: 0 auto;       /* lo centramos horizontalmente */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.welcome-text {
+  color: #fff;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.welcome-subtext {
+  color: #ddd;
+  font-size: 1.5rem;
+}
+
+/* Gengar */
+.card-col {
+  display: flex;
+  justify-content: center;
+}
+
+.gengar-card {
+  border: none;
+  background: transparent;
+  max-width: 600px;
+  width: 100%;   
+  border-radius: 2rem;  
+    
+}
+
+.gengar-img {
+  width: 500px;   
+  height: auto;
+  display: block;
+}
