@@ -134,7 +134,7 @@ async function saveSpotifyToken(token) {
 
 
     function handleUserLoggedIn(user) {
-        navigate('/dashboard');
+        navigate('/home');
     }
     function handleUserNotLoggedIn(user) {
         navigate('/login');

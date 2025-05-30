@@ -66,35 +66,26 @@ export default function SpotifyLoginView() {
       </div>
     ));
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Spotify React Login</h1>
-
+   return (
+    <div className="login-container">
+      <div className="login-box">
+        <h2>Welcome</h2>
+        <p>Sign in to your account</p>
         {!token ? (
           <a
+            className="button spotify-auth"
             href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=user-read-email`}
           >
             Iniciar sesión con Spotify
+            <span className="hoverEffect"><div/></span>
           </a>
         ) : (
-          <button onClick={logout}>Cerrar sesión</button>
+          <button className="button" onClick={logout}>
+            Cerrar sesión
+            <span className="hoverEffect"><div/></span>
+          </button>
         )}
-
-        {token ? (
-          <form onSubmit={searchArtists}>
-            <input
-              type="text"
-              onChange={(e) => setSearchKey(e.target.value)}
-            />
-            <button type="submit">Buscar artista</button>
-          </form>
-        ) : (
-          <h2>Debes iniciar sesión con Spotify</h2>
-        )}
-
-        {renderArtists()}
-      </header>
+      </div>
     </div>
-  );
+);
 }

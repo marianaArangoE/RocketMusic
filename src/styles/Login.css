@@ -1,0 +1,107 @@
+/* src/styles/LoginView.css */
+
+/* ── Contenedor fullscreen con overlay ligero ── */
+.login-container {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* ── Caja de login con degradado y animaciones ── */
+.login-box {
+  animation: slideInFromLeft 1s ease-out;
+  width: 360px;
+  max-width: 90%;
+  background: linear-gradient(90deg, #1e3a8a, #6b21a8);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,0.3);
+  color: #fff;
+  text-align: center;
+}
+
+.login-box h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  animation: appear 1.5s ease-out;
+}
+.login-box p {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  opacity: 0.85;
+  animation: appear 2.5s ease-out;
+}
+
+/* ── Botones con el mismo estilo del proyecto ── */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 30px;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: #fff;
+  background: var(--console-color, #DE004B);
+  box-shadow: 0 0px 7px -5px rgba(0,0,0,0.5);
+  transition: all 0.02s;
+  margin: 0.5rem 0;
+}
+
+.button:hover {
+  background: rgba(193,228,248,0.8);
+  color: #210055;
+}
+.button:active {
+  transform: scale(0.97);
+}
+
+/* ── Efecto de luz giratoria ── */
+.hoverEffect {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+.hoverEffect div {
+  background: linear-gradient(
+    90deg,
+    rgba(222,0,75,1)   0%,
+    rgba(191,70,255,1) 49%,
+    rgba(0,212,255,1)  100%
+  );
+  border-radius: 40rem;
+  width: 10rem;
+  height: 10rem;
+  filter: blur(20px);
+  animation: effect 3s linear infinite;
+  opacity: 0.5;
+  transition: width 0.4s, height 0.4s;
+}
+.button:hover .hoverEffect div {
+  width: 8rem;
+  height: 8rem;
+}
+
+@keyframes effect {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes slideInFromLeft {
+  from { opacity: 0; transform: translateX(-100px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes appear {
+  from { opacity: 0; transform: translateY(1rem); }
+  to   { opacity: 1; transform: translateY(0); }
+}
