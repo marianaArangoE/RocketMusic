@@ -2,6 +2,8 @@
 
 .signout-container {
   /* pantalla completa centrada */
+  position: relative;
+  z-index: 1;                         /* por encima del overlay */
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -11,6 +13,8 @@
 }
 
 .signout-card {
+  position: relative;
+  z-index: 2;                         /* por encima del overlay */
   background: #ffffff;
   padding: 2rem;
   border-radius: 12px;
@@ -36,34 +40,75 @@
   justify-content: center;
 }
 
+/* reutiliza tu .button animado */
 .confirm-btn,
 .cancel-btn {
   flex: 1;
-  padding: 0.75rem 1rem;
-  font-size: 0.9rem;
-  font-weight: bold;
+  position: relative;
+  overflow: hidden;
   border: none;
-  border-radius: 8px;
+  padding: 15px 30px;
+  border-radius: 10rem;
+  font-weight: bold;
   cursor: pointer;
-  transition: transform 0.1s ease, background 0.2s ease;
+  color: #ffffff;
+  background: var(--console-color, #DE004B); /* para confirmar */
+  transition: all 0.02s;
+  box-shadow: 0 0px 7px -5px rgba(0,0,0,0.5);
 }
 
-/* botón confirmar: acento Team Rocket */
+/* hoverEffect common */
+.confirm-btn .hoverEffect,
+.cancel-btn .hoverEffect {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+.confirm-btn .hoverEffect div,
+.cancel-btn .hoverEffect div {
+  background: linear-gradient(
+    90deg,
+    rgba(222,0,75,1)   0%,
+    rgba(191,70,255,1) 49%,
+    rgba(0,212,255,1)  100%
+  );
+  border-radius: 40rem;
+  width: 10rem;
+  height: 10rem;
+  filter: blur(20px);
+  animation: effect 3s linear infinite;
+  opacity: 0.5;
+  transition: width 0.4s, height 0.4s;
+}
+.confirm-btn:hover .hoverEffect div,
+.cancel-btn:hover .hoverEffect div {
+  width: 8rem;
+  height: 8rem;
+}
+@keyframes effect {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* estilos específicos */
 .confirm-btn {
   background: var(--console-color, #DE004B);
   color: #fff;
 }
 .confirm-btn:hover {
-  background: #c5003f;
-  transform: scale(1.05);
+  background: rgba(193,228,248,0.8);
+  color: #210055;
+  transform: scale(1.03);
 }
 
-/* botón cancelar: gris suave */
 .cancel-btn {
   background: #e0e0e0;
   color: #252525;
 }
 .cancel-btn:hover {
   background: #ccc;
-  transform: scale(1.05);
+  transform: scale(1.03);
 }

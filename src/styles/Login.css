@@ -1,6 +1,6 @@
-/* src/styles/LoginView.css */
+/* src/styles/Login.css */
 
-/* ── Contenedor fullscreen con overlay ligero ── */
+/* Contenedor fullscreen con overlay ligero */
 .login-container {
   position: fixed;
   inset: 0;
@@ -11,11 +11,11 @@
   z-index: 1000;
 }
 
-/* ── Caja de login con degradado y animaciones ── */
+/* Caja de login con degradado y animaciones */
 .login-box {
   animation: slideInFromLeft 1s ease-out;
-  width: 360px;
-  max-width: 90%;
+  width: 600px;           /* antes era 360px */
+  max-width: 95%;         /* para que siga siendo responsiva */
   background: linear-gradient(90deg, #1e3a8a, #6b21a8);
   border-radius: 1rem;
   padding: 2rem;
@@ -24,6 +24,7 @@
   text-align: center;
 }
 
+/* Títulos y subtítulos */
 .login-box h2 {
   font-size: 2rem;
   font-weight: 800;
@@ -37,12 +38,42 @@
   animation: appear 2.5s ease-out;
 }
 
-/* ── Botones con el mismo estilo del proyecto ── */
+/* ── Formulario de Email/Password ── */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.auth-form input {
+  background: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  color: #252525;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.1);
+  outline: none;
+  transition: box-shadow .2s ease;
+}
+
+.auth-form input:focus {
+  box-shadow: 0 0 0 3px rgba(222,0,75,0.3);
+}
+
+/* Mensaje de error */
+.error-text {
+  color: #ff8989;
+  font-size: 0.9rem;
+}
+
+/* ── Botones uniformes ── */
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 15px 30px;
+  padding: 0.75rem 1.5rem;
   border: none;
   position: relative;
   overflow: hidden;
@@ -52,7 +83,8 @@
   color: #fff;
   background: var(--console-color, #DE004B);
   box-shadow: 0 0px 7px -5px rgba(0,0,0,0.5);
-  transition: all 0.02s;
+  transition: all 0.2s;
+  width: 100%;
   margin: 0.5rem 0;
 }
 
@@ -64,7 +96,7 @@
   transform: scale(0.97);
 }
 
-/* ── Efecto de luz giratoria ── */
+/* Efecto giratorio común */
 .hoverEffect {
   position: absolute;
   inset: 0;
@@ -93,6 +125,37 @@
   height: 8rem;
 }
 
+/* ── Sección de login social ── */
+.social-login {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.social-login p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* ── Toggle entre Sign In / Sign Up ── */
+.toggle-section {
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+.link-button {
+  background: none;
+  border: none;
+  color: #fff;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+}
+.link-button:hover {
+  opacity: 0.8;
+}
+
+/* ── Animaciones ── */
 @keyframes effect {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }

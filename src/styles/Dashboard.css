@@ -217,3 +217,13 @@
   /* centra el botón */
   margin-bottom: 2rem;
 }
+.dashboard-controls .button {
+  flex: none;            /* que no crezca en su contenedor flex */
+  width: 140px;          /* el ancho que prefieras */
+  max-width: 140px;
+  white-space: nowrap;   /* que no rompa línea */
+  text-align: center;    /* centra el texto */
+  display: inline-flex;  /* para que siga heredando tu animación */
+  align-items: center;
+  justify-content: center;
+}

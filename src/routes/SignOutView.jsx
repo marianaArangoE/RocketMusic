@@ -1,11 +1,13 @@
 // src/routes/SignOutView.jsx
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useSignOut from '../hooks/useSignOut';
 import '../styles/SignOut.css';
 
 export default function SignOutView() {
   const [confirming, setConfirming] = useState(true);
   const signOut = useSignOut();
+  const navigate = useNavigate();
 
   if (!confirming) {
     return (
@@ -28,12 +30,14 @@ export default function SignOutView() {
             }}
           >
             ✅ Sí, cerrar sesión
+            <span className="hoverEffect"><div /></span>
           </button>
           <button
             className="cancel-btn"
-            onClick={() => (window.location.href = '/dashboard')}
+            onClick={() => navigate('/dashboard')}
           >
             ❌ No, volver
+            <span className="hoverEffect"><div /></span>
           </button>
         </div>
       </div>

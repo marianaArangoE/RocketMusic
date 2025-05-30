@@ -7,10 +7,8 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import './theme.css';
 import './index.css';
 import Layout from './uicomponents/Layout';
-// import './styles/Layout.css';
 
 import SpotifyLoginView from './routes/SpotifyLoginView';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import LoginView from './routes/LoginView';
 import HomeView from './routes/HomeView';
 import DashboardView from './routes/DashboardView';
@@ -22,18 +20,21 @@ import CallbackView from './routes/CallbackView';
 import MyPlayListView from './routes/MyPlaylistView';
 import SocialView from './routes/SocialView';
 import PlaylistDetailView from './routes/PlaylistDetailView';
+
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import ProtectedRoute from './components/ProtectedRoute';
 import { ThemeProvider } from './hooks/ThemeContext';
 
 function AppRouter() {
   const location = useLocation();
 
   useEffect(() => {
-    if (location.pathname === '/home') {
+    // Sólo ocultar scroll en la ruta home ("/" o "/home")
+    if (location.pathname === '/' || location.pathname === '/home') {
       document.body.style.overflowY = 'hidden';
     } else {
       document.body.style.overflowY = 'auto';
     }
-
     return () => {
       document.body.style.overflowY = 'auto';
     };
@@ -41,23 +42,35 @@ function AppRouter() {
 
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<HomeView />} />
-        <Route path="home" element={<HomeView />} />
-        <Route path="dashboard" element={<DashboardView />} />
-        <Route path="profile" element={<ProfileView />} />
-        <Route path="signout" element={<SignOutView />} />
-        <Route path="my-playlists" element={<MyPlayListView />} />
-        <Route path="social" element={<SocialView />} />
-        <Route path="playlist/:playlistId" element={<PlaylistDetailView />} />
-        <Route path="u/:username" element={<PublicProfileView />} />
-        <Route path="choose-username" element={<ChooseUsernameView />} />
+      {/* Rutas públicas */}
+      <Route path="/login" element={<LoginView />} />
+      <Route path="/spotify-login" element={<SpotifyLoginView />} />
+      <Route path="/callback" element={<CallbackView />} />
+
+      {/* Rutas protegidas: usuario Firebase */}
+      <Route element={<ProtectedRoute />}>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomeView />} />
+          <Route path="home" element={<HomeView />} />
+          <Route path="profile" element={<ProfileView />} />
+          <Route path="signout" element={<SignOutView />} />
+          <Route path="u/:username" element={<PublicProfileView />} />
+          <Route path="choose-username" element={<ChooseUsernameView />} />
+        </Route>
       </Route>
 
-      <Route path="login" element={<LoginView />} />
-      <Route path="spotify-login" element={<SpotifyLoginView />} />
-      <Route path="callback" element={<CallbackView />} />
-      <Route path="*" element={<HomeView />} />
+      {/* Rutas que además requieren token Spotify */}
+      <Route element={<ProtectedRoute />}>
+        <Route path="/" element={<Layout />}>
+          <Route path="dashboard" element={<DashboardView />} />
+          <Route path="my-playlists" element={<MyPlayListView />} />
+          <Route path="social" element={<SocialView />} />
+          <Route path="playlist/:playlistId" element={<PlaylistDetailView />} />
+        </Route>
+      </Route>
+
+      {/* Cualquier otra ruta redirige a home (será protegida) */}
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }

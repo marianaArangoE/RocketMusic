@@ -1,6 +1,6 @@
-/* ProfileView.css */
+/* src/styles/ProfileView.css */
 
-/* Contenedor general: ocupa todo sobre el overlay */
+/* Contenedor general: todo sobre el overlay */
 .profile-content {
   position: relative;
   z-index: 1;
@@ -8,7 +8,7 @@
   margin: 0 auto;
   padding: 2rem 1rem;
   font-family: var(--console-font);
-  color: #252525;       /* texto oscuro */
+  color: #ffffff;           /* ahora todo texto por defecto blanco */
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -26,13 +26,13 @@
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
 .profile-header h1 {
   margin: 0;
   font-size: 2rem;
   color: var(--console-color);
-  text-shadow: 0 0 6px rgba(0,0,0,0.3);
+  text-shadow: 0 0 6px rgba(0,0,0,0.6);
 }
 .profile-email {
   font-size: 0.9rem;
@@ -48,7 +48,7 @@
 .stat-card {
   position: relative;
   z-index: 2;
-  background: #ffffff;   /* fondo blanco */
+  background: #ffffff;
   padding: 1rem 1.5rem;
   border-radius: 12px;
   min-width: 120px;
@@ -63,6 +63,7 @@
   margin: 0;
   font-size: 1.3rem;
   font-weight: bold;
+  color: #252525;           /* valor oscuro para contraste sobre blanco */
 }
 
 /* Grid para Top Artists y Recent Tracks */
@@ -74,7 +75,7 @@
 .card {
   position: relative;
   z-index: 2;
-  background: #ffffff;   /* fondo blanco */
+  background: #ffffff;
   padding: 1rem;
   border-radius: 12px;
   text-align: left;
@@ -106,15 +107,61 @@
   position: relative;
   z-index: 2;
 }
-.profile-actions .button {
-  width: 200px;
-  margin: 0 auto;
+
+/* Convertimos el link en botón con animación */
+.profile-actions .edit-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 10rem;
+  background: var(--console-color);
+  color: #ffffff;
+  font-weight: bold;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.02s;
+  text-decoration: none;
 }
-.edit-link {
-  color: var(--console-color);
-  text-decoration: underline;
-  opacity: 0.9;
+.profile-actions .edit-button:hover {
+  background: rgba(193,228,248,0.8);
+  color: #210055;
 }
-.edit-link:hover {
-  opacity: 1;
+.profile-actions .edit-button:active {
+  transform: scale(0.97);
+}
+/* efecto de luz giratoria */
+.profile-actions .hoverEffect {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.profile-actions .hoverEffect div {
+  background: linear-gradient(
+    90deg,
+    rgba(222,0,75,1)   0%,
+    rgba(191,70,255,1) 49%,
+    rgba(0,212,255,1)  100%
+  );
+  border-radius: 40rem;
+  width: 10rem;
+  height: 10rem;
+  filter: blur(20px);
+  animation: effect 3s linear infinite;
+  opacity: 0.5;
+  transition: width 0.4s, height 0.4s;
+}
+.profile-actions .edit-button:hover .hoverEffect div {
+  width: 8rem;
+  height: 8rem;
+}
+
+/* keyframes compartidos */
+@keyframes effect {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }

@@ -22,7 +22,10 @@
   position: relative;
   z-index: 1;
 }
-
+.dash-card .actions a {
+  display: block;
+  margin: 0.5rem 0;
+}
 /* ── Cartas blancas, más grandes y centradas ── */
 .dash-card {
   position: relative;

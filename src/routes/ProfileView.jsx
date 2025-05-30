@@ -5,7 +5,7 @@ import useFirebaseAuth from '../hooks/useFirebaseAuth';
 import useSpotifyToken from '../hooks/useSpotifyToken';
 import axios from 'axios';
 import '../styles/Profile.css';
-import LoadingScreen from '../components/LoadingScreen';
+
 export default function ProfileView() {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useFirebaseAuth();
@@ -75,22 +75,30 @@ export default function ProfileView() {
     })();
   }, [spotifyToken, redirectToSpotifyLogin]);
 
-if (authLoading || loadingData) {
-    return <LoadingScreen />;
+  if (authLoading || loadingData) {
+    return <p className="text-center mt-5">Cargando perfil…</p>;
   }
+
   if (!spotifyToken) {
     return (
       <div className="profile-empty">
         <p>No estás vinculado a Spotify.</p>
-        <button onClick={redirectToSpotifyLogin}>Vincular cuenta</button>
+        <button onClick={redirectToSpotifyLogin} className="button">
+          Vincular cuenta
+          <span className="hoverEffect"><div/></span>
+        </button>
       </div>
     );
   }
+
   if (error || !profile) {
     return (
       <div className="profile-empty">
         <p>Error al cargar tus datos de Spotify.</p>
-        <button onClick={redirectToSpotifyLogin}>Reintentar</button>
+        <button onClick={redirectToSpotifyLogin} className="button">
+          Reintentar
+          <span className="hoverEffect"><div/></span>
+        </button>
       </div>
     );
   }
@@ -141,18 +149,21 @@ if (authLoading || loadingData) {
       </section>
 
       <footer className="profile-actions">
-        <button onClick={() => navigate('/my-playlists')} className="button">
+        <button
+          onClick={() => navigate('/my-playlists')}
+          className="button"
+        >
           📂 Mis Playlists
           <span className="hoverEffect"><div/></span>
         </button>
-        <a
-          href="https://www.spotify.com/account/profile/"
-          target="_blank"
-          rel="noreferrer"
-          className="edit-link"
+
+        <button
+          onClick={() => window.open('https://www.spotify.com/account/profile/', '_blank')}
+          className="edit-button"
         >
           ✏️ Editar perfil en Spotify
-        </a>
+          <span className="hoverEffect"><div/></span>
+        </button>
       </footer>
     </div>
   );
