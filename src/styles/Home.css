@@ -7,14 +7,13 @@ body, .home-container, .nav-rocket, .welcome-box, .welcome-text, .welcome-subtex
   --console-font: 'Source Code Pro', monospace;
 }
 
-/* Contenedor general */
 .home-container {
   display: flex;
   flex-direction: column;
-  justify-content: center; /* centra verticalmente */
-  align-items: center;     /* centra horizontalmente */
+  justify-content: center;
+  align-items: center;    
   min-height: 100vh;
-  padding-top: 4rem; /* igual o mayor a la altura de la navbar */
+  padding-top: 4rem; 
   box-sizing: border-box;
   padding-left: 0;
   padding-right: 0;
@@ -33,7 +32,7 @@ body, .home-container, .nav-rocket, .welcome-box, .welcome-text, .welcome-subtex
 }
 
 
-/* Navbar */
+
 .nav-rocket {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -42,7 +41,6 @@ body, .home-container, .nav-rocket, .welcome-box, .welcome-text, .welcome-subtex
   z-index: 2;
 }
 
-/* Contenedor de botones */
 .nav-button-container {
   display: flex;
   width: 100%;
@@ -52,25 +50,23 @@ body, .home-container, .nav-rocket, .welcome-box, .welcome-text, .welcome-subtex
   align-items: center;
 }
 
-/* Botones de texto más grandes */
 .nav-button {
   background: transparent;
   border: none;
-  padding: 0.75rem 1.5rem;   /* mayor padding */
+  padding: 0.75rem 1.5rem;   
   color: #fff !important;
   text-transform: uppercase;
-  font-size: 1rem;           /* tamaño de fuente un poco mayor */
+  font-size: 1rem;           
   cursor: pointer;
-  transition: color 0.4s ease, transform 0.4s ease; /* transición suave */
+  transition: color 0.4s ease, transform 0.4s ease; 
 }
 
-/* Hover suave: cambia color y levanta ligeramente */
+
 .nav-button:hover {
   color: #00ff99;
   transform: translateY(-2px);
 }
 
-/* Limpieza de estilos por defecto de Nav.Link */
 .nav-rocket .nav-link {
   background: transparent !important;
   border: none !important;
@@ -80,17 +76,17 @@ body, .home-container, .nav-rocket, .welcome-box, .welcome-text, .welcome-subtex
   margin: 0 !important;
 }
 
-/* Layout principal */
+
 .home-row {
   display: flex;
   align-items: center;
-  padding: 0; /* Elimina el padding-top extra */
+  padding: 0; 
 }
 
-/* Caja de bienvenida */
+
 .welcome-box {
   position: relative;
-  z-index: 2; /* por delante de Gengar */
+  z-index: 2; 
   padding: 2rem;
   border-radius: 2rem;
   margin: 2rem 0 0 0;
@@ -102,13 +98,11 @@ body, .home-container, .nav-rocket, .welcome-box, .welcome-text, .welcome-subtex
   justify-content: space-between;
 }
 
-/* Texto dentro */
+
 .welcome-box > div {
   /* flex: 1 1 60%;
   max-width: 60%; */
-
-    background: transparent !important;
-  /* si hubiera un backdrop-filter or filtro, desactivarlo también: */
+  background: transparent !important;
   backdrop-filter: none !important;
 }
 
@@ -132,7 +126,6 @@ body, .home-container, .nav-rocket, .welcome-box, .welcome-text, .welcome-subtex
   background: none;
 }
 
-/* Apunta a la img dentro del botón */
 .pokeball-btn img {
   width: 48px;
   height: 48px;
@@ -141,7 +134,6 @@ body, .home-container, .nav-rocket, .welcome-box, .welcome-text, .welcome-subtex
   transform-origin: center center;
 }
 
-/* Keyframes de wobble más marcado y un poco de “saltarín” */
 @keyframes superWobble {
   0%, 100% {
     transform: rotate(0deg) translateY(0);
@@ -162,7 +154,7 @@ body, .home-container, .nav-rocket, .welcome-box, .welcome-text, .welcome-subtex
     transform: rotate(5deg) translateY(-1px);
   }
 }
-/* Fade-in suave */
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(1rem); }
   to   { opacity: 1; transform: translateY(0); }
@@ -173,10 +165,10 @@ body, .home-container, .nav-rocket, .welcome-box, .welcome-text, .welcome-subtex
   animation: fadeIn 1.5s ease-out 0.5s forwards;
 }
 
-/* Gengar */
+
 .gengar-card {
   position: relative;
-  z-index: 1; /* detrás del texto */
+  z-index: 1; 
   border: none;
   background: transparent;
   max-width: 600px;

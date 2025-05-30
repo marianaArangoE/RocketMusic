@@ -1,9 +1,8 @@
-/* src/styles/SignOutView.css */
+
 
 .signout-container {
-  /* pantalla completa centrada */
   position: relative;
-  z-index: 1;                         /* por encima del overlay */
+  z-index: 1;                       
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -14,7 +13,7 @@
 
 .signout-card {
   position: relative;
-  z-index: 2;                         /* por encima del overlay */
+  z-index: 2;                        
   background: #ffffff;
   padding: 2rem;
   border-radius: 12px;
@@ -40,7 +39,7 @@
   justify-content: center;
 }
 
-/* reutiliza tu .button animado */
+
 .confirm-btn,
 .cancel-btn {
   flex: 1;
@@ -52,12 +51,12 @@
   font-weight: bold;
   cursor: pointer;
   color: #ffffff;
-  background: var(--console-color, #DE004B); /* para confirmar */
+  background: var(--console-color, #DE004B); 
   transition: all 0.02s;
   box-shadow: 0 0px 7px -5px rgba(0,0,0,0.5);
 }
 
-/* hoverEffect common */
+
 .confirm-btn .hoverEffect,
 .cancel-btn .hoverEffect {
   position: absolute;
@@ -93,7 +92,6 @@
   to   { transform: rotate(360deg); }
 }
 
-/* estilos específicos */
 .confirm-btn {
   background: var(--console-color, #DE004B);
   color: #fff;

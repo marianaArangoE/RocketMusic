@@ -1,4 +1,3 @@
-// src/main.jsx
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -29,7 +28,6 @@ function AppRouter() {
   const location = useLocation();
 
   useEffect(() => {
-    // Sólo ocultar scroll en la ruta home ("/" o "/home")
     if (location.pathname === '/' || location.pathname === '/home') {
       document.body.style.overflowY = 'hidden';
     } else {
@@ -42,12 +40,11 @@ function AppRouter() {
 
   return (
     <Routes>
-      {/* Rutas públicas */}
       <Route path="/login" element={<LoginView />} />
       <Route path="/spotify-login" element={<SpotifyLoginView />} />
       <Route path="/callback" element={<CallbackView />} />
 
-      {/* Rutas protegidas: usuario Firebase */}
+
       <Route element={<ProtectedRoute />}>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomeView />} />
@@ -58,8 +55,6 @@ function AppRouter() {
           <Route path="choose-username" element={<ChooseUsernameView />} />
         </Route>
       </Route>
-
-      {/* Rutas que además requieren token Spotify */}
       <Route element={<ProtectedRoute />}>
         <Route path="/" element={<Layout />}>
           <Route path="dashboard" element={<DashboardView />} />
@@ -68,8 +63,6 @@ function AppRouter() {
           <Route path="playlist/:playlistId" element={<PlaylistDetailView />} />
         </Route>
       </Route>
-
-      {/* Cualquier otra ruta redirige a home (será protegida) */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

@@ -1,6 +1,4 @@
-/* src/styles/SpotifyLoginView.css */
 
-/* Contenedor que ocupa toda la pantalla */
 .login-container {
   position: fixed;
   inset: 0;
@@ -11,7 +9,7 @@
   z-index: 9999;
 }
 
-/* Caja de login con degradado */
+
 .login-box {
   animation: slideInFromLeft 1s ease-out;
   max-width: 400px;
@@ -24,7 +22,7 @@
   text-align: center;
 }
 
-/* Título y subtítulo */
+
 .login-box h2 {
   font-size: 2rem;
   font-weight: 800;
@@ -38,7 +36,7 @@
   opacity: .85;
 }
 
-/* Botones estilo proyecto */
+
 .button, .spotify-auth {
   display: inline-flex;
   align-items: center;

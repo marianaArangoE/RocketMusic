@@ -1,18 +1,17 @@
-// src/uicomponents/Layout.jsx
-import React, { useContext } from 'react'; // <-- agrega useContext
+
+import React, { useContext } from 'react'; 
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { Nav } from 'react-bootstrap';
-import cssNavar from '../styles/Layout.module.css';  // donde tienes .home-container
+import cssNavar from '../styles/Layout.module.css'; 
 import { ThemeContext } from '../hooks/ThemeContext';
 
 
 export default function Layout() {
   const navigate = useNavigate();
-  const { dark, toggle } = useContext(ThemeContext); // <-- usa el contexto
+  const { dark, toggle } = useContext(ThemeContext); 
 
   return (
     <>
-      {/* Navbar */}
       <Nav className={cssNavar.nav_rocket}>
         <div className="nav-button-container">
           <button className="nav-button" onClick={() => navigate('/home')}>Home</button>
@@ -35,10 +34,8 @@ export default function Layout() {
         </div>
       </Nav>
 
-      {/* Overlay / sombra */}
-      <div className="home-container__overlay" />
 
-      {/* Aquí van todas las pantallas hijas */}
+      <div className="home-container__overlay" />
       <main style={{ paddingTop: '4rem' }}>
         <Outlet />
       </main>

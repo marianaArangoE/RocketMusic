@@ -1,10 +1,9 @@
-// src/routes/PlaylistDetailView.jsx
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import useFirebaseAuth from '../hooks/useFirebaseAuth';
 import useSpotifyToken from '../hooks/useSpotifyToken';
-import '../styles/PlaylistDetail.css'; // Asegúrate de tener este CSS
+import '../styles/PlaylistDetail.css'; 
 
 export default function PlaylistDetailView() {
   const { playlistId } = useParams();
@@ -18,12 +17,12 @@ export default function PlaylistDetailView() {
   const [currentAudio, setCurrentAudio] = React.useState(null);
   const [playingTrackId, setPlayingTrackId] = React.useState(null);
 
-  // 1. Redirect if not logged in
+ 
   React.useEffect(() => {
     if (!authLoading && !user) navigate('/login');
   }, [authLoading, user, navigate]);
 
-  // 2. Fetch playlist details
+
   React.useEffect(() => {
     if (!spotifyToken) {
       setLoadingData(false);
@@ -53,7 +52,7 @@ export default function PlaylistDetailView() {
     })();
   }, [playlistId, spotifyToken, redirectToSpotifyLogin]);
 
-  // 3. Play/pause preview
+ 
   function handlePreviewClick(track) {
     if (!track.preview_url) return;
     if (currentAudio && playingTrackId === track.id) {
@@ -70,13 +69,12 @@ export default function PlaylistDetailView() {
     audio.onended = () => setPlayingTrackId(null);
   }
 
-  // 4. Loading skeleton
+
   if (authLoading || loadingData) {
     return (
       <div className="playlist-skeleton">
         <div className="main">
           <div className="currentplaying">
-            {/* tu SVG de Gengar aquí */}
             <svg height="50px" width="50px" viewBox="0 0 64 64" className="spotify">…</svg>
             <p className="heading">Cargando playlist…</p>
           </div>
@@ -95,7 +93,6 @@ export default function PlaylistDetailView() {
     );
   }
 
-  // 5. Token missing / error / not found
   if (!spotifyToken) {
     return (
       <div className="playlist-detail">
@@ -120,7 +117,6 @@ export default function PlaylistDetailView() {
     );
   }
 
-  // 6. Render final
   const tracks = playlist.tracks.items.map(i => i.track).filter(Boolean);
   const previewableCount = tracks.filter(t => t.preview_url).length;
 

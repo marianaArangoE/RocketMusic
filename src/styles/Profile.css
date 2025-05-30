@@ -1,6 +1,4 @@
-/* src/styles/ProfileView.css */
 
-/* Contenedor general: todo sobre el overlay */
 .profile-content {
   position: relative;
   z-index: 1;
@@ -8,14 +6,13 @@
   margin: 0 auto;
   padding: 2rem 1rem;
   font-family: var(--console-font);
-  color: #ffffff;           /* ahora todo texto por defecto blanco */
-  display: flex;
+  color: #ffffff;           
   flex-direction: column;
   gap: 2rem;
   text-align: center;
 }
 
-/* Header de perfil */
+
 .profile-header {
   display: flex;
   flex-direction: column;
@@ -39,7 +36,7 @@
   opacity: 0.8;
 }
 
-/* Stats simples: fondo blanco */
+
 .profile-stats {
   display: flex;
   gap: 1rem;
@@ -63,10 +60,10 @@
   margin: 0;
   font-size: 1.3rem;
   font-weight: bold;
-  color: #252525;           /* valor oscuro para contraste sobre blanco */
+  color: #252525;          
 }
 
-/* Grid para Top Artists y Recent Tracks */
+
 .profile-cards-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -98,7 +95,7 @@
   color: #252525;
 }
 
-/* Footer con acciones */
+
 .profile-actions {
   display: flex;
   flex-direction: column;
@@ -108,7 +105,7 @@
   z-index: 2;
 }
 
-/* Convertimos el link en botón con animación */
+
 .profile-actions .edit-button {
   display: inline-flex;
   align-items: center;
@@ -132,7 +129,7 @@
 .profile-actions .edit-button:active {
   transform: scale(0.97);
 }
-/* efecto de luz giratoria */
+
 .profile-actions .hoverEffect {
   position: absolute;
   inset: 0;
@@ -160,7 +157,7 @@
   height: 8rem;
 }
 
-/* keyframes compartidos */
+
 @keyframes effect {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }

@@ -1,4 +1,3 @@
-// src/routes/MyPlaylistView.jsx
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import useFirebaseAuth from '../hooks/useFirebaseAuth';
@@ -15,14 +14,13 @@ export default function MyPlaylistView() {
   const [loadingData, setLoadingData] = React.useState(true);
   const [error, setError] = React.useState(null);
 
-  // 1) Redirigir si no hay usuario
   React.useEffect(() => {
     if (!authLoading && !user) {
       navigate('/login');
     }
   }, [authLoading, user, navigate]);
 
-  // 2) Cargar mis playlists cuando cambie el token
+
   React.useEffect(() => {
     if (!spotifyToken) {
       setLoadingData(false);
@@ -52,7 +50,7 @@ export default function MyPlaylistView() {
     })();
   }, [spotifyToken, redirectToSpotifyLogin]);
 
-  // 3) Estados de carga / error / sin token
+
   if (authLoading || loadingData) {
     return <p className="text-center mt-5">Cargando playlists…</p>;
   }
@@ -77,7 +75,7 @@ export default function MyPlaylistView() {
     );
   }
 
-  // 4) Render principal
+  
   return (
     <div className="dashboard-content">
       <h1>🎵 Mis playlists 🎵</h1>

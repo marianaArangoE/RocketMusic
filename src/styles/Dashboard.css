@@ -1,20 +1,15 @@
-/* ── Asegura que el dashboard quede sobre la capa semitransparente ── */
+
 .dashboard-content {
   position: relative;
   z-index: 1;
   min-height: 100vh;
-  /* ocupa toda la altura del viewport */
   overflow: hidden;
-  /* desactiva el scroll */
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* centra horizontalmente todo su contenido */
   padding: 2rem 1rem;
-  /* mantén algo de padding */
 }
 
-/* ── Grid de 3 columnas fijas, centrado ── */
 .dash-cards-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -22,13 +17,11 @@
   justify-content: center;
   width: 100%;
   max-width: calc(3 * 260px + 2 * 1.5rem);
-  /* 3 cards de 260px + gaps */
   margin: 0 auto;
   position: relative;
   z-index: 1;
 }
 
-/* ── Cartas blancas, más grandes y centradas ── */
 .dash-card {
   position: relative;
   z-index: 2;
@@ -44,15 +37,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* centra la imagen y el texto */
   text-align: center;
-  /* alinea el texto */
   justify-content: space-between;
   cursor: pointer;
   transition: transform .3s ease, box-shadow .3s ease;
 }
 
-/* ── Hover más suave ── */
 .dash-card:hover {
   transform: translateY(-6px);
   box-shadow:
@@ -60,7 +50,6 @@
     0 0 12px rgba(255, 255, 255, 0.7);
 }
 
-/* ── Imagen centrada y tamaño ampliado ── */
 .dash-card img {
   width: 200px;
   height: 200px;
@@ -69,7 +58,6 @@
   margin: 0 auto 1rem;
 }
 
-/* ── Título con glow y alineado ── */
 .dash-card h3 {
   margin: 0.5rem 0;
   font-size: 1.1rem;
@@ -83,7 +71,6 @@
   animation-duration: 0.8s;
 }
 
-/* ── Link “Escuchar” centrado ── */
 .dash-card a {
   margin-top: auto;
   color: var(--console-color);
@@ -95,7 +82,6 @@
   text-decoration: underline;
 }
 
-/* ── Keyframes glow ── */
 @keyframes neonGlow {
   from {
     text-shadow: 0 0 4px var(--console-color);
@@ -106,7 +92,6 @@
   }
 }
 
-/* —— Header de bienvenida —— */
 .welcome-header {
   display: flex;
   align-items: center;
@@ -122,20 +107,17 @@
   font-size: 2rem;
   font-weight: 700;
   color: #ffffff;
-  /* texto blanco */
   text-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
   text-align: center;
 }
 
 .mimikyu-icon {
   width: 56px;
-  /* un pelín más grande */
   height: 56px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   border-radius: 50%;
 }
 
-/* —— Botón “Actualizar” integrado —— */
 .button {
   display: inline-flex;
   align-items: center;
@@ -149,7 +131,6 @@
   font-weight: bold;
   cursor: pointer;
   color: #ffffff;
-  /* texto blanco */
   background: var(--console-color);
   z-index: 0;
   box-shadow: 0 0px 7px -5px rgba(0, 0, 0, 0.5);
@@ -165,7 +146,6 @@
   transform: scale(0.97);
 }
 
-/* efecto de luz giratoria */
 .hoverEffect {
   position: absolute;
   inset: 0;
@@ -200,8 +180,6 @@
     transform: rotate(360deg);
   }
 }
-
-/* —— Título de sección centrado y blanco —— */
 .dashboard-content h2 {
   text-align: center;
   font-size: 1.6rem;
@@ -214,16 +192,15 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  /* centra el botón */
   margin-bottom: 2rem;
 }
 .dashboard-controls .button {
-  flex: none;            /* que no crezca en su contenedor flex */
-  width: 140px;          /* el ancho que prefieras */
+  flex: none;            
+  width: 140px;          
   max-width: 140px;
-  white-space: nowrap;   /* que no rompa línea */
-  text-align: center;    /* centra el texto */
-  display: inline-flex;  /* para que siga heredando tu animación */
+  white-space: nowrap;   
+  text-align: center;    
+  display: inline-flex;  
   align-items: center;
   justify-content: center;
 }

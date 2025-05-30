@@ -1,4 +1,3 @@
-// src/hooks/useSignOut.js
 import { useCallback } from 'react';
 import { getAuth, signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
@@ -6,8 +5,6 @@ import { useNavigate } from 'react-router-dom';
 export default function useSignOut() {
   const navigate = useNavigate();
   const auth = getAuth();
-
-  // Borra solo las claves de Firebase en localStorage, no toca spotify_token
   const clearFirebaseStorage = useCallback(async () => {
     Object.keys(localStorage)
       .filter(key => key.startsWith('firebase'))
@@ -22,7 +19,7 @@ export default function useSignOut() {
     }
   }, []);
 
-  // Cierra sesiones externas
+  
   const openExternalLogouts = useCallback(() => {
     const googleWin = window.open(
       'https://accounts.google.com/Logout',
@@ -40,7 +37,6 @@ export default function useSignOut() {
     }, 3000);
   }, []);
 
-  // Función principal de sign out
   const doSignOut = useCallback(async () => {
     try {
       await signOut(auth);

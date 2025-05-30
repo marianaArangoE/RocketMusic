@@ -1,4 +1,3 @@
-// src/routes/LoginView.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useFirebaseAuth from '../hooks/useFirebaseAuth';
@@ -18,7 +17,7 @@ export default function LoginView() {
   const { login: redirectToSpotifyLogin } = useSpotifyToken();
   const navigate = useNavigate();
 
-  const [mode, setMode] = useState('signin'); // 'signin' or 'signup'
+  const [mode, setMode] = useState('signin'); 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);

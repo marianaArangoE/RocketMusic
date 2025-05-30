@@ -1,4 +1,4 @@
-/* ── Container por encima del overlay ── */
+
 .social-content {
   position: relative;
   z-index: 1;
@@ -7,14 +7,14 @@
   background: transparent;
 }
 
-/* ── Título centrado ── */
+
 .social-content h1 {
   text-align: center;
   color: white;
   margin-bottom: 1.5rem;
 }
 
-/* ── Búsqueda + Aleatorio en línea ── */
+
 .social-controls {
   display: flex;
   justify-content: center;
@@ -22,7 +22,7 @@
   margin-bottom: 1.5rem;
 }
 
-/* Formulario de búsqueda */
+
 .search-form {
   display: flex;
   gap: 0.5rem;
@@ -34,10 +34,8 @@
   width: 200px;
 }
 
-/* ── Botones de control (Buscar + Aleatorio) ── */
 .search-form > button,
 .social-controls > button {
-  /* Afecta sólo a los botones que son hijos directos de .search-form o .social-controls */
   width: 120px;
   max-width: 120px;
   flex: none;
@@ -47,13 +45,13 @@
   text-align: center;
 }
 
-/* Si usas .button para ellos, anula posibles width:100% */
+
 .search-form > button.button,
 .social-controls > button.button {
   width: 120px !important;
 }
 
-/* ── Lista vertical de artistas ── */
+
 .artist-list {
   list-style: none;
   margin: 0 auto;
@@ -94,9 +92,9 @@
   text-decoration: underline;
 }
 
-/* ── Botón Follow ── */
+
 .follow-button {
-  /* ancho automático según contenido */
+
   width: auto;
   padding: 0.5rem 1rem;
   font-size: 0.9rem;
@@ -106,7 +104,7 @@
   border: 1px solid #ccc;
   cursor: pointer;
 
-  /* si quieres mantener tu hoverEffect */
+
   position: relative;
   overflow: hidden;
 }

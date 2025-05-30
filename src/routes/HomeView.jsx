@@ -1,4 +1,3 @@
-// src/routes/HomeView.jsx
 import React from 'react';
 import TrackVisibility from 'react-on-screen';
 import { ReactTyped } from 'react-typed';
@@ -15,17 +14,17 @@ export default function HomeView() {
   const { user, loading: authLoading } = useFirebaseAuth();
   const { token: spotifyToken, login: redirectToSpotifyLogin } = useSpotifyToken();
 
-  // Mientras comprobamos el estado de autenticación
+  
   if (authLoading) {
     return <p className="text-center mt-5">Cargando…</p>;
   }
 
-  // Si no hay usuario Firebase, lo enviamos al login
+
   if (!user) {
     return <Navigate to="/login" replace />;
   }
 
-  // Si está logueado en Firebase pero no vinculado a Spotify
+ 
   if (user && !spotifyToken) {
     return (
       <Container fluid className="home-container text-center">
@@ -38,7 +37,6 @@ export default function HomeView() {
     );
   }
 
-  // Ya está todo listo: Firebase + Spotify
   return (
     <Container fluid className="home-container">
       <Row className="home-row">

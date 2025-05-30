@@ -1,5 +1,4 @@
-// src/hooks/useCuratorRecommendations.js
-// …
+
       const playlists = res.data.playlists.items || [];
 
       const curators = playlists
@@ -11,4 +10,4 @@
           playlistName: p.name,
           playlistImg: p.images?.[0]?.url || null,
         }));
-// …
+

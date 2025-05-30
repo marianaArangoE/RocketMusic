@@ -1,4 +1,3 @@
-// src/hooks/useSpotifyFollow.js
 import { useState, useCallback } from 'react';
 import axios from 'axios';
 import useSpotifyToken from './useSpotifyToken';
@@ -19,7 +18,6 @@ export default function useSpotifyFollow() {
       setFollowingUsers(prev => ({ ...prev, [userId]: true }));
     } catch (err) {
       if (err.response?.status === 403) {
-        // No es un usuario followable
         setNotFollowableUsers(prev => new Set(prev).add(userId));
       } else if (err.response?.status === 401) {
         localStorage.removeItem('spotify_token');

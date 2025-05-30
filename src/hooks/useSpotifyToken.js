@@ -1,4 +1,3 @@
-// src/hooks/useSpotifyToken.js
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { auth, db } from '../firebase/Firebase';
@@ -22,7 +21,6 @@ async function generateCodeChallenge(verifier) {
 export default function useSpotifyToken() {
   const [token, setToken] = useState(() => localStorage.getItem('spotify_token'));
 
-  // inicia el flow de login
   const login = useCallback(async () => {
     const verifier = generateRandomString(128);
     const challenge = await generateCodeChallenge(verifier);
@@ -39,7 +37,6 @@ export default function useSpotifyToken() {
     window.location.href = `https://accounts.spotify.com/authorize?${params}`;
   }, []);
 
-  // intercambia el code por token y guarda en Firestore
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
@@ -60,12 +57,11 @@ export default function useSpotifyToken() {
           localStorage.setItem('spotify_token', access_token);
           setToken(access_token);
 
-          // obtenemos userId de Spotify
+          
           const me = await axios.get('https://api.spotify.com/v1/me', {
             headers: { Authorization: `Bearer ${access_token}` }
           });
           const spotifyId = me.data.id;
-          // guardamos en Firestore cuando haya sesión Firebase
           onAuthStateChanged(auth, async (fbUser) => {
             if (!fbUser) return;
             const ref = doc(db, 'users', fbUser.uid);
@@ -80,7 +76,7 @@ export default function useSpotifyToken() {
             else               await setDoc(ref, { username: '', ...dataToSave });
           });
 
-          // limpiamos URL
+          
           window.history.replaceState({}, document.title, REDIRECT_URI);
         } catch (err) {
           console.error('Error Spotify token:', err);

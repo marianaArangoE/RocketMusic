@@ -1,4 +1,3 @@
-// src/routes/SocialView.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import useSpotifyToken from "../hooks/useSpotifyToken";
@@ -13,7 +12,6 @@ export default function SocialView() {
 
   const { token, login: redirectToSpotifyLogin } = useSpotifyToken();
 
-  // Inicial (20 artistas “top”)
   useEffect(() => {
     if (!token) return;
     (async () => {
@@ -30,7 +28,7 @@ export default function SocialView() {
           img: a.images?.[0]?.url || null,
           profileUrl: a.external_urls.spotify,
         }));
-        // follow-status
+      
         const ids = sliced.map(a => a.id).join(",");
         const followRes = await axios.get(
           "https://api.spotify.com/v1/me/following/contains",
@@ -51,7 +49,7 @@ export default function SocialView() {
     })();
   }, [token, redirectToSpotifyLogin]);
 
-  // Búsqueda
+
   const doSearch = async e => {
     e.preventDefault();
     if (!token) return redirectToSpotifyLogin();
@@ -74,7 +72,7 @@ export default function SocialView() {
     }
   };
 
-  // Follow / Unfollow
+
   const followArtist = async id => {
     await axios.put(
       "https://api.spotify.com/v1/me/following",

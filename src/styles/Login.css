@@ -11,11 +11,11 @@
   z-index: 1000;
 }
 
-/* Caja de login con degradado y animaciones */
+
 .login-box {
   animation: slideInFromLeft 1s ease-out;
-  width: 600px;           /* antes era 360px */
-  max-width: 95%;         /* para que siga siendo responsiva */
+  width: 600px;          
+  max-width: 95%;         
   background: linear-gradient(90deg, #1e3a8a, #6b21a8);
   border-radius: 1rem;
   padding: 2rem;
@@ -24,7 +24,7 @@
   text-align: center;
 }
 
-/* Títulos y subtítulos */
+
 .login-box h2 {
   font-size: 2rem;
   font-weight: 800;
@@ -38,7 +38,7 @@
   animation: appear 2.5s ease-out;
 }
 
-/* ── Formulario de Email/Password ── */
+
 .auth-form {
   display: flex;
   flex-direction: column;
@@ -62,13 +62,13 @@
   box-shadow: 0 0 0 3px rgba(222,0,75,0.3);
 }
 
-/* Mensaje de error */
+
 .error-text {
   color: #ff8989;
   font-size: 0.9rem;
 }
 
-/* ── Botones uniformes ── */
+
 .button {
   display: inline-flex;
   align-items: center;
@@ -96,7 +96,6 @@
   transform: scale(0.97);
 }
 
-/* Efecto giratorio común */
 .hoverEffect {
   position: absolute;
   inset: 0;
@@ -125,7 +124,6 @@
   height: 8rem;
 }
 
-/* ── Sección de login social ── */
 .social-login {
   display: flex;
   flex-direction: column;
@@ -138,7 +136,6 @@
   font-size: 0.9rem;
 }
 
-/* ── Toggle entre Sign In / Sign Up ── */
 .toggle-section {
   font-size: 0.9rem;
   margin-top: 1rem;
@@ -155,7 +152,7 @@
   opacity: 0.8;
 }
 
-/* ── Animaciones ── */
+
 @keyframes effect {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }

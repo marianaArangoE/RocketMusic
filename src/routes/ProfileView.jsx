@@ -1,4 +1,3 @@
-// src/routes/ProfileView.jsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import useFirebaseAuth from '../hooks/useFirebaseAuth';
@@ -50,7 +49,7 @@ export default function ProfileView() {
         setTopArtists(topArtistsRes.data.items);
         setRecentTracks(recentTracksRes.data.items);
 
-        // calcular géneros top
+       
         const genreCount = {};
         topArtistsRes.data.items.forEach(a =>
           a.genres.forEach(g => (genreCount[g] = (genreCount[g] || 0) + 1))
