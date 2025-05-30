@@ -104,8 +104,12 @@ body, .home-container, .nav-rocket, .welcome-box, .welcome-text, .welcome-subtex
 
 /* Texto dentro */
 .welcome-box > div {
-  flex: 1 1 60%;
-  max-width: 60%;
+  /* flex: 1 1 60%;
+  max-width: 60%; */
+
+    background: transparent !important;
+  /* si hubiera un backdrop-filter or filtro, desactivarlo también: */
+  backdrop-filter: none !important;
 }
 
 .welcome-text {

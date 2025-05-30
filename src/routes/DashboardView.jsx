@@ -111,7 +111,7 @@ export default function DashboardView() {
      </h1>
      </div>
       <div className="dashboard-controls" style={{ marginBottom: '1rem', display: 'flex', gap: '1rem' }}>
-        <button className="fancy-button" onClick={loadDashboardData}>
+        <button className="button" onClick={loadDashboardData}>
            Actualizar
           <span className="hoverEffect">
             <div />
@@ -121,7 +121,7 @@ export default function DashboardView() {
         </button>
       </div>
 
-      <h2>🎲 Playlists Destacadas</h2>
+      <h2> 🎲 Playlists Destacadas 🎲 </h2>
       {randomPlaylists.length === 0 ? (
         <p>No hay playlists para mostrar.</p>
       ) : (

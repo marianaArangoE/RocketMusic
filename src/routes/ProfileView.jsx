@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import useFirebaseAuth from '../hooks/useFirebaseAuth';
 import useSpotifyToken from '../hooks/useSpotifyToken';
 import axios from 'axios';
-
+import '../styles/Profile.css';
+import LoadingScreen from '../components/LoadingScreen';
 export default function ProfileView() {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useFirebaseAuth();
@@ -49,6 +50,7 @@ export default function ProfileView() {
         setTopArtists(topArtistsRes.data.items);
         setRecentTracks(recentTracksRes.data.items);
 
+        // calcular géneros top
         const genreCount = {};
         topArtistsRes.data.items.forEach(a =>
           a.genres.forEach(g => (genreCount[g] = (genreCount[g] || 0) + 1))
@@ -60,7 +62,7 @@ export default function ProfileView() {
         setTopGenres(sorted);
 
       } catch (err) {
-        if (err.response?.status === 401 || err.response?.status === 403) {
+        if ([401,403].includes(err.response?.status)) {
           localStorage.removeItem('spotify_token');
           redirectToSpotifyLogin();
         } else {
@@ -73,20 +75,20 @@ export default function ProfileView() {
     })();
   }, [spotifyToken, redirectToSpotifyLogin]);
 
-  if (authLoading || loadingData) return <p>Cargando perfil…</p>;
-
+if (authLoading || loadingData) {
+    return <LoadingScreen />;
+  }
   if (!spotifyToken) {
     return (
-      <div>
+      <div className="profile-empty">
         <p>No estás vinculado a Spotify.</p>
         <button onClick={redirectToSpotifyLogin}>Vincular cuenta</button>
       </div>
     );
   }
-
   if (error || !profile) {
     return (
-      <div>
+      <div className="profile-empty">
         <p>Error al cargar tus datos de Spotify.</p>
         <button onClick={redirectToSpotifyLogin}>Reintentar</button>
       </div>
@@ -94,49 +96,64 @@ export default function ProfileView() {
   }
 
   return (
-    <div>
-      <h1>🎧 Hola, {profile.display_name}</h1>
-      <img
-        src={
-          profile.images?.[0]?.url ||
-          'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png'
-        }
-        alt="Avatar"
-        width={150}
-        style={{ borderRadius: '50%', margin: '1rem 0' }}
-      />
-      <p>📧 {profile.email}</p>
-      <p>🆔 {profile.id}</p>
-      <p>🎵 Playlists: {playlistsCount}</p>
+    <div className="profile-content">
+      <section className="profile-header">
+        <img
+          className="profile-avatar"
+          src={
+            profile.images?.[0]?.url ||
+            'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png'
+          }
+          alt="Avatar"
+        />
+        <h1>🎧 {profile.display_name}</h1>
+        <p className="profile-email">📧 {profile.email}</p>
+      </section>
 
-      <h3>👩‍🎤 Tus artistas top</h3>
-      <ul>
-        {topArtists.map(a => <li key={a.id}>{a.name}</li>)}
-      </ul>
+      <section className="profile-stats">
+        <div className="stat-card">
+          <h3>Playlists</h3>
+          <p>{playlistsCount}</p>
+        </div>
+        <div className="stat-card">
+          <h3>Géneros Top</h3>
+          <p>{topGenres.join(', ')}</p>
+        </div>
+      </section>
 
-      <h3>🎼 Géneros favoritos</h3>
-      <ul>
-        {topGenres.map((g,i) => <li key={i}>{g}</li>)}
-      </ul>
+      <section className="profile-cards-grid">
+        <div className="card">
+          <h3>👩‍🎤 Artistas Top</h3>
+          <ul>
+            {topArtists.map(a => <li key={a.id}>{a.name}</li>)}
+          </ul>
+        </div>
+        <div className="card">
+          <h3>🕘 Recientes</h3>
+          <ul>
+            {recentTracks.map((item,i) => (
+              <li key={i}>
+                {item.track.name} — {item.track.artists[0]?.name}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
 
-      <h3>🕘 Reproducciones recientes</h3>
-      <ul>
-        {recentTracks.map((item,i) => (
-          <li key={i}>
-            {item.track.name} — {item.track.artists[0]?.name}
-          </li>
-        ))}
-      </ul>
-
-      <button onClick={() => navigate('/my-playlists')}>📂 Ver mis playlists</button>
-      <br /><br />
-      <a
-        href="https://www.spotify.com/account/profile/"
-        target="_blank"
-        rel="noreferrer"
-      >
-        ✏️ Editar perfil en Spotify
-      </a>
+      <footer className="profile-actions">
+        <button onClick={() => navigate('/my-playlists')} className="button">
+          📂 Mis Playlists
+          <span className="hoverEffect"><div/></span>
+        </button>
+        <a
+          href="https://www.spotify.com/account/profile/"
+          target="_blank"
+          rel="noreferrer"
+          className="edit-link"
+        >
+          ✏️ Editar perfil en Spotify
+        </a>
+      </footer>
     </div>
   );
 }

@@ -1,0 +1,18 @@
+/* src/styles/LoadingScreen.css */
+.loading-screen {
+  position: fixed;      /* ocupa toda la pantalla */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7); /* semi-oscuro */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;        /* por encima de todo */
+}
+
+.loading-gif {
+  width: 150px;         /* ajústalo al tamaño que quieras */
+  height: auto;
+}

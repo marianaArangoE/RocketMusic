@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import useFirebaseAuth from '../hooks/useFirebaseAuth';
 import useSpotifyToken from '../hooks/useSpotifyToken';
 import axios from 'axios';
-import '../styles/Dashboard.css';
+import '../styles/MyPlaylists.css';
 
 export default function MyPlaylistView() {
   const navigate = useNavigate();
@@ -80,7 +80,7 @@ export default function MyPlaylistView() {
   // 4) Render principal
   return (
     <div className="dashboard-content">
-      <h1>🎵 Mis playlists</h1>
+      <h1>🎵 Mis playlists 🎵</h1>
 
       {playlists.length === 0 ? (
         <p>No se encontraron playlists.</p>
@@ -102,7 +102,7 @@ export default function MyPlaylistView() {
                   rel="noreferrer"
                   className="spotify-link"
                 >
-                  ▶️ Ver en Spotify
+                   Ver en Spotify
                 </a>
                 <Link to={`/playlist/${pl.id}`} className="details-link">
                   🧐 Ver detalles

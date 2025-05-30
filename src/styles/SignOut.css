@@ -1,0 +1,69 @@
+/* src/styles/SignOutView.css */
+
+.signout-container {
+  /* pantalla completa centrada */
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.5);
+  font-family: var(--console-font, 'Source Code Pro', monospace);
+}
+
+.signout-card {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  width: 300px;
+}
+
+.signout-question {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-dark, #252525);
+}
+
+.signout-loading {
+  font-size: 1.1rem;
+  color: var(--text-dark, #252525);
+}
+
+.signout-buttons {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.confirm-btn,
+.cancel-btn {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.1s ease, background 0.2s ease;
+}
+
+/* botón confirmar: acento Team Rocket */
+.confirm-btn {
+  background: var(--console-color, #DE004B);
+  color: #fff;
+}
+.confirm-btn:hover {
+  background: #c5003f;
+  transform: scale(1.05);
+}
+
+/* botón cancelar: gris suave */
+.cancel-btn {
+  background: #e0e0e0;
+  color: #252525;
+}
+.cancel-btn:hover {
+  background: #ccc;
+  transform: scale(1.05);
+}

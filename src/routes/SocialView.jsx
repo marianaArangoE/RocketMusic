@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import useSpotifyToken from "../hooks/useSpotifyToken";
-
+import '../styles/Social.css';
 export default function SocialView() {
   const [artists, setArtists] = useState([]);
   const [search, setSearch] = useState("");
@@ -133,77 +133,120 @@ export default function SocialView() {
     );
   }
 
-  return (
-    <div style={{ padding: 16 }}>
-      <h1>🎶 Descubre Artistas</h1>
+return (
+  <div className="social-content">
+    <h1>🎶 Descubre Artistas</h1>
 
+    <div className="social-controls">
       <button
+        className="random-button"
         onClick={() => window.location.reload()}
         disabled={loading}
-        style={{ marginBottom: 16 }}
       >
         🔄 Aleatorio
       </button>
+    </div>
 
-      {loading ? (
-        <p>Cargando…</p>
-      ) : (
-        <ul>
-          {artists.map(a => (
-            <li key={a.id} style={{ margin: "1rem 0" }}>
-              <img
-                src={a.img || "https://placehold.co/64"}
-                alt={a.name}
-                width={64}
-                height={64}
-                style={{ borderRadius: 32, marginRight: 12 }}
-              />
+    {loading ? (
+      <p>Cargando…</p>
+    ) : (
+      <ul className="artist-list">
+        {artists.map(a => (
+          <li key={a.id}>
+            <img
+              src={a.img || "https://placehold.co/64"}
+              alt={a.name}
+            />
+            <div className="artist-info">
               <strong>{a.name}</strong>
-              <br />
               <a href={a.profileUrl} target="_blank" rel="noreferrer">
                 Ver en Spotify
               </a>
-              <br />
+            </div>
+            <div className="artist-actions">
               <button
+                className="follow-button"
                 onClick={() =>
                   following[a.id]
                     ? unfollowArtist(a.id)
                     : followArtist(a.id)
                 }
               >
+                {/* Corazón vacío */}
+                <svg
+                  className="empty"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="32"
+                  height="32"
+                >
+                  <path fill="none" d="M0 0H24V24H0z" />
+                  <path
+                    d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10
+                       12.5C9.5 20 2 16 2 9c0-3.5 2.5-6
+                       5.5-6C9.36 3 11 4 12 5c1-1
+                       2.64-2 4.5-2zm-3.566 15.604c.881-.556
+                       1.676-1.109 2.42-1.701C18.335 14.533
+                       20 11.943 20 9c0-2.36-1.537-4-3.5-4
+                       -1.076 0-2.24.57-3.086 1.414L12
+                       7.828l-1.414-1.414C9.74 5.57
+                       8.576 5 7.5 5 5.56 5 4 6.656 4
+                       9c0 2.944 1.666 5.533 4.645 7.903
+                       .745.592 1.54 1.145 2.421
+                       1.7.299.189.595.37.934.572
+                       .339-.202.635-.383.934-.571z"
+                  />
+                </svg>
+                {/* Corazón relleno */}
+                <svg
+                  className="filled"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="32"
+                  height="32"
+                >
+                  <path d="M0 0H24V24H0z" fill="none" />
+                  <path
+                    d="M16.5 3C19.538 3 22 5.5 22 9c0 7
+                       -7.5 11-10 12.5C9.5 20 2 16 2
+                       9c0-3.5 2.5-6 5.5-6C9.36 3
+                       11 4 12 5c1-1 2.64-2 4.5-2z"
+                  />
+                </svg>
                 {following[a.id] ? "Dejar de seguir" : "Seguir"}
               </button>
-            </li>
-          ))}
-        </ul>
-      )}
+            </div>
+          </li>
+        ))}
+      </ul>
+    )}
 
-      <hr style={{ margin: "2rem 0" }} />
+    <hr />
 
-      <form onSubmit={doSearch}>
-        <input
-          type="text"
-          value={search}
-          placeholder="Buscar artistas"
-          onChange={e => setSearch(e.target.value)}
-        />
-        <button type="submit" disabled={loading}>
-          Buscar
-        </button>
-      </form>
+    <form className="search-form" onSubmit={doSearch}>
+      <input
+        type="text"
+        value={search}
+        placeholder="Buscar artistas"
+        onChange={e => setSearch(e.target.value)}
+      />
+      <button type="submit" disabled={loading}>
+        Buscar
+      </button>
+    </form>
 
-      {searchResults.length > 0 && (
-        <ul style={{ marginTop: 16 }}>
-          {searchResults.map(a => (
-            <li key={a.id}>
-              <strong>{a.name}</strong>{" "}
-              <a href={a.profileUrl} target="_blank" rel="noreferrer">
-                Ver en Spotify
-              </a>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
+    {searchResults.length > 0 && (
+      <ul className="artist-list">
+        {searchResults.map(a => (
+          <li key={a.id}>
+            <strong>{a.name}</strong>{" "}
+            <a href={a.profileUrl} target="_blank" rel="noreferrer">
+              Ver en Spotify
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+);
 }

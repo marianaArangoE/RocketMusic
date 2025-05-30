@@ -191,3 +191,10 @@
   justify-content: center;   /* centra el botón */
   margin-bottom: 2rem;
 }
+.dashboard-content > h1 {
+  color: #ffffff;                      /* texto blanco */
+  text-align: center;                  /* centrado */
+  font-size: 2rem;                     /* un poco más grande */
+  margin-bottom: 1.5rem;               /* separarlo del grid */
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+}
