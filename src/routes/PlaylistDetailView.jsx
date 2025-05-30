@@ -1,9 +1,10 @@
 // src/routes/PlaylistDetailView.jsx
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import useFirebaseAuth from '../hooks/useFirebaseAuth';
 import useSpotifyToken from '../hooks/useSpotifyToken';
-import axios from 'axios';
+import '../styles/PlaylistDetail.css'; // Asegúrate de tener este CSS
 
 export default function PlaylistDetailView() {
   const { playlistId } = useParams();
@@ -19,12 +20,10 @@ export default function PlaylistDetailView() {
 
   // 1. Redirect if not logged in
   React.useEffect(() => {
-    if (!authLoading && !user) {
-      navigate('/login');
-    }
+    if (!authLoading && !user) navigate('/login');
   }, [authLoading, user, navigate]);
 
-  // 2. Fetch playlist details (forcing US market for previews)
+  // 2. Fetch playlist details
   React.useEffect(() => {
     if (!spotifyToken) {
       setLoadingData(false);
@@ -41,7 +40,7 @@ export default function PlaylistDetailView() {
         );
         setPlaylist(data);
       } catch (err) {
-        if (err.response?.status === 401 || err.response?.status === 403) {
+        if ([401, 403].includes(err.response?.status)) {
           localStorage.removeItem('spotify_token');
           redirectToSpotifyLogin();
         } else {
@@ -54,7 +53,7 @@ export default function PlaylistDetailView() {
     })();
   }, [playlistId, spotifyToken, redirectToSpotifyLogin]);
 
-  // 3. Preview play/pause handler
+  // 3. Play/pause preview
   function handlePreviewClick(track) {
     if (!track.preview_url) return;
     if (currentAudio && playingTrackId === track.id) {
@@ -71,13 +70,35 @@ export default function PlaylistDetailView() {
     audio.onended = () => setPlayingTrackId(null);
   }
 
-  // 4. Render states
+  // 4. Loading skeleton
   if (authLoading || loadingData) {
-    return <p>Cargando playlist…</p>;
+    return (
+      <div className="playlist-skeleton">
+        <div className="main">
+          <div className="currentplaying">
+            {/* tu SVG de Gengar aquí */}
+            <svg height="50px" width="50px" viewBox="0 0 64 64" className="spotify">…</svg>
+            <p className="heading">Cargando playlist…</p>
+          </div>
+          {[1, 2, 3].map(i => (
+            <div className="loader" key={i}>
+              <div className="song">
+                <p className="name">Cargando…</p>
+                <p className="artist">Cargando…</p>
+              </div>
+              <div className="albumcover"></div>
+              <div className={i === 1 ? 'loading' : 'play'}></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
   }
+
+  // 5. Token missing / error / not found
   if (!spotifyToken) {
     return (
-      <div>
+      <div className="playlist-detail">
         <p>❓ Necesitas vincular tu cuenta de Spotify.</p>
         <button onClick={redirectToSpotifyLogin}>Vincular cuenta</button>
       </div>
@@ -85,66 +106,87 @@ export default function PlaylistDetailView() {
   }
   if (error) {
     return (
-      <div>
+      <div className="playlist-detail">
         <p>Error al cargar la playlist.</p>
         <button onClick={redirectToSpotifyLogin}>Reintentar</button>
       </div>
     );
   }
   if (!playlist) {
-    return <p>No se encontró la playlist.</p>;
+    return (
+      <div className="playlist-detail">
+        <p>No se encontró la playlist.</p>
+      </div>
+    );
   }
 
-  // 5. Prepare and render playlist details
-  const tracks = playlist.tracks.items
-    .map(item => item.track)
-    .filter(Boolean);
+  // 6. Render final
+  const tracks = playlist.tracks.items.map(i => i.track).filter(Boolean);
   const previewableCount = tracks.filter(t => t.preview_url).length;
 
   return (
-    <div>
-      <button onClick={() => navigate(-1)}>← Volver</button>
-      <img
-        src={playlist.images?.[0]?.url || 'https://placehold.co/300x300?text=Sin+imagen'}
-        alt="Cover"
-        width={200}
-      />
-      <h1>{playlist.name}</h1>
-      <p>{playlist.description || 'Sin descripción disponible'}</p>
-      <p>👥 Seguidores: {playlist.followers?.total ?? 0}</p>
-      <p>🎶 Total canciones: {playlist.tracks.total}</p>
-      <p>
-        🎧 Canciones con preview: {previewableCount}/{playlist.tracks.items.length}
-      </p>
+    <div className="playlist-detail">
+      <button className="back-button" onClick={() => navigate(-1)}>← Volver</button>
 
-      <ul>
+      <div className="playlist-header">
+        <img
+          className="playlist-cover"
+          src={playlist.images?.[0]?.url || 'https://placehold.co/300x300?text=Sin+imagen'}
+          alt="Cover"
+        />
+        <div className="playlist-info">
+          <h1>{playlist.name}</h1>
+          <p>{playlist.description || 'Sin descripción disponible'}</p>
+          <div className="stats">
+            <span>👥 {playlist.followers?.total ?? 0}</span>
+            <span>🎶 {playlist.tracks.total}</span>
+            <span>🎧 {previewableCount}/{tracks.length}</span>
+          </div>
+        </div>
+      </div>
+
+      <ul className="track-list">
         {tracks.map(track => (
-          <li key={track.id} style={{ marginBottom: '1rem' }}>
-            <strong>{track.name}</strong> — {track.artists?.[0]?.name || 'Desconocido'}
-            <br />
-            Álbum: {track.album?.name || 'Desconocido'}
-            <br />
-            ⏱{' '}
-            {`${Math.floor(track.duration_ms / 60000)}:${String(
-              Math.floor((track.duration_ms % 60000) / 1000)
-            ).padStart(2, '0')}`}
-            <br />
-            {track.preview_url ? (
-              <button onClick={() => handlePreviewClick(track)}>
-                {playingTrackId === track.id ? '⏸️ Pausar' : '▶️ Reproducir preview'}
-              </button>
-            ) : (
-              // fallback to Spotify embed iframe when no preview available
-              <iframe
-                title={`Spotify embed ${track.id}`}
-                src={`https://open.spotify.com/embed/track/${track.id}`}
-                width="300"
-                height="80"
-                frameBorder="0"
-                allow="encrypted-media"
-                style={{ marginTop: 8 }}
+          <li key={track.id} className="track-item">
+            <div className="track-row">
+              <img
+                className="track-album"
+                src={track.album?.images?.[0]?.url || 'https://placehold.co/50'}
+                alt=""
               />
-            )}
+              <div className="track-info">
+                <a
+                  href={`https://open.spotify.com/track/${track.id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="track-link"
+                >
+                  <strong>{track.name}</strong>
+                </a>
+                <span className="track-artist">{track.artists?.[0]?.name || 'Desconocido'}</span>
+                <span className="track-duration">
+                  {`${Math.floor(track.duration_ms/60000)}:${String(Math.floor((track.duration_ms%60000)/1000)).padStart(2,'0')}`}
+                </span>
+              </div>
+              <div className="track-action">
+                {track.preview_url ? (
+                  <button
+                    className="play-btn"
+                    onClick={() => handlePreviewClick(track)}
+                  >
+                    {playingTrackId === track.id ? '⏸️' : '▶️'}
+                  </button>
+                ) : (
+                  <iframe
+                    className="spotify-embed"
+                    title={`embed-${track.id}`}
+                    src={`https://open.spotify.com/embed/track/${track.id}`}
+                    frameBorder="0"
+                    allow="encrypted-media"
+                  />
+                )}
+              </div>
+            </div>
           </li>
         ))}
       </ul>

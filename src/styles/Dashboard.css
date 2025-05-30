@@ -1,5 +1,4 @@
 /* src/styles/Dashboard.css */
-/* 1) Fuente consola + color de texto */
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&display=swap');
 
 :root {
@@ -7,52 +6,9 @@
   --console-color: #DE004B;
 }
 
-/* Fondo y overlay */
-.home-container {
-  position: relative;
-  min-height: 100vh;
-  background-image: url('../uiResources/idk.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-.home-container::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.7);
-  z-index: 0;
-}
+/* ... tus reglas previas ... */
 
-/* Contenido principal */
-.dashboard-content {
-  position: relative;
-  z-index: 1;
-  padding: 2rem;
-  color: #fff;
-  font-family: var(--console-font);
-  text-align: center;
-}
-
-.dashboard-content h1 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  text-shadow: 0 0 4px rgba(222, 0, 75, 1);
-}
-
-.dashboard-controls {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  margin: 2rem 0;
-}
-
-.dashboard-content h2 {
-  font-size: 1.5rem;
-  margin: 2rem 0 1rem;
-}
-
-/* Grid fijo 3×2 */
+/* Ajustes para las cards en “Mis playlists” */
 .dash-cards-container {
   display: grid;
   grid-template-columns: repeat(3, 190px);
@@ -66,150 +22,84 @@
   height: 254px;
   border-radius: 30px;
   background: #212121;
-  box-shadow:
-    15px 15px 30px rgb(25, 25, 25),
-    -15px -15px 30px rgb(60, 60, 60);
+  box-shadow: 15px 15px 30px rgb(25,25,25), -15px -15px 30px #000226;
   color: #fff;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 1rem;
+  justify-content: space-between;
   text-align: center;
-  transition: transform .3s ease, box-shadow .3s ease;
   cursor: pointer;
+  transition: transform .3s, box-shadow .3s;
   position: relative;
   overflow: hidden;
   z-index: 1;
 }
 .dash-card:hover {
   transform: translateY(-8px);
-  box-shadow:
-    20px 20px 40px rgb(25, 25, 25),
-    -20px -20px 40px rgb(60, 60, 60);
+  box-shadow: 20px 20px 40px rgb(25,25,25), -20px -20px 40px rgb(60,60,60);
 }
 
 .dash-card img {
-  border-radius: 20px;
   width: 150px;
   height: 150px;
   object-fit: cover;
-  margin-bottom: .5rem;
+  border-radius: 20px;
+  margin: 0 auto 0.5rem;
 }
 
-/* ————— Añadido neon glow al título ————— */
-@keyframes neonGlow {
-  from {
-    text-shadow: 0 0 4px var(--console-color);
-  }
-  to {
-    text-shadow: 0 0 12px var(--console-color);
-  }
-}
-
+/* Título */
 .dash-card h3 {
+  color: #fff;
   font-size: 1rem;
-  margin: .5rem 0;
-  flex-grow: 1;
   line-height: 1.2;
-  max-height: 2.4em;
+  margin: 0.5rem 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
   overflow: hidden;
-  text-overflow: ellipsis;
-  word-break: break-word;
-
-  /* efecto glow */
+  text-shadow: 0 0 4px var(--console-color);
   animation: neonGlow 1.5s ease-in-out infinite alternate;
 }
-
-/* intensificar glow al hover */
 .dash-card h3:hover {
   animation-duration: 0.8s;
 }
 
-/* ——————————————————————————————— */
-
-.dash-card a {
-  font-size: .9rem;
-  color: var(--console-color);
-  text-decoration: none;
-  margin-top: .5rem;
-}
-.dash-card a:hover {
-  text-decoration: underline;
-}
-
-/* Botones “fancy-button” */
-.fancy-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 15px 30px;
-  border: 0;
-  position: relative;
-  overflow: hidden;
-  border-radius: 10rem;
-  transition: all 0.2s;
-  font-weight: bold;
-  cursor: pointer;
-  color: rgb(37, 37, 37);
-  z-index: 0;
-  background: #000226;
-  box-shadow: 0 0px 7px -5px rgba(0, 0, 0, 0.5);
-}
-.fancy-button:hover {
-  background: rgb(193, 228, 248);
-  color: rgb(33, 0, 85);
-}
-.fancy-button:active {
-  transform: scale(0.97);
-}
-
-.hoverEffect {
-  position: absolute;
-  inset: 0;
+/* Contenedor de acciones */
+.dash-card .actions {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
-  pointer-events: none;
-}
-.hoverEffect div {
-  background: linear-gradient(
-    90deg,
-    rgba(222, 0, 75, 1) 0%,
-    rgba(191, 70, 255, 1) 49%,
-    rgba(0, 212, 255, 1) 100%
-  );
-  border-radius: 40rem;
-  width: 10rem;
-  height: 10rem;
-  transition: width 0.4s, height 0.4s;
-  filter: blur(20px);
-  animation: effect 3s linear infinite;
-  opacity: 0.5;
-}
-.fancy-button:hover .hoverEffect div {
-  width: 8rem;
-  height: 8rem;
-}
-@keyframes effect {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
- /* …tus reglas previas… */
-
-/* Aseguramos que el texto sea blanco sobre fondo oscuro */
-.fancy-button {
-  color: #fff !important;
+/* Enlace Ver en Spotify */
+.spotify-link {
+  color: var(--console-color) !important;
+  font-size: 0.9rem;
+  text-decoration: none;
+  display: inline-block;
+}
+.spotify-link:hover {
+  text-decoration: underline;
+  opacity: 1;
 }
 
-/* Al hacer hover (fondo claro), volvemos a texto oscuro */
-.fancy-button:hover {
-  color: rgb(33, 0, 85) !important;
+/* Enlace Ver detalles */
+.details-link {
+  color: var(--console-color) !important;
+  font-size: 0.9rem;
+  text-decoration: none;
+  display: inline-block;
 }
-.mimikyu-icon {
-  width: 300px;
-  height: 300px;
-  vertical-align: right;
-  margin-right: 0.5rem;
+.details-link:hover {
+  text-decoration: underline;
+  opacity: 1;
 }
+
+/* Animación glow para titles */
+@keyframes neonGlow {
+  from { text-shadow: 0 0 4px var(--console-color); }
+  to   { text-shadow: 0 0 12px var(--console-color); }
+}
+
+/* ... resto de tu CSS (botones, partículas, etc.) ... */

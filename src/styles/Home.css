@@ -91,7 +91,6 @@ body, .home-container, .nav-rocket, .welcome-box, .welcome-text, .welcome-subtex
 .welcome-box {
   position: relative;
   z-index: 2; /* por delante de Gengar */
-  background: rgba(255,255,255,0.2);
   padding: 2rem;
   border-radius: 2rem;
   margin: 2rem 0 0 0;
