@@ -2,7 +2,7 @@
 import React, { useContext } from 'react'; // <-- agrega useContext
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { Nav } from 'react-bootstrap';
-import '../styles/Layout.css';  // donde tienes .home-container
+import cssNavar from '../styles/Layout.module.css';  // donde tienes .home-container
 import { ThemeContext } from '../hooks/ThemeContext';
 
 
@@ -13,7 +13,7 @@ export default function Layout() {
   return (
     <>
       {/* Navbar */}
-      <Nav className="nav-rocket">
+      <Nav className={cssNavar.nav_rocket}>
         <div className="nav-button-container">
           <button className="nav-button" onClick={() => navigate('/home')}>Home</button>
           <button className="nav-button" onClick={() => navigate('/dashboard')}>Dashboard</button>

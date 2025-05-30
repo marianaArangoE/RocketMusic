@@ -7,6 +7,11 @@ body.theme-dark {
   --nav-bg: #23272f;
   --nav-btn-bg: #333;
   --nav-btn-color: #fff;
+  --button-bg: #23272f;
+  --button-color: #fff;
+  --button-hover-bg: #333;
+  --button-hover-color: #fff;
+  --hover-gradient: linear-gradient(90deg, #de004b 0%, #bf46ff 49%, #00d4ff 100%);
   background-image: url('/src/uiResources/idk.png');
 }
 
@@ -16,6 +21,11 @@ body.theme-light {
   --nav-bg: #fff;
   --nav-btn-bg: #eaeaea;
   --nav-btn-color: #222;
+  --button-bg: #fff;
+  --button-color: #23272f;
+  --button-hover-bg: #eaeaea;
+  --button-hover-color: #23272f;
+  --hover-gradient: linear-gradient(90deg, #ffd600 0%, #ff6f00 49%, #00e676 100%);
   background-image: url('/src/uiResources/ligth.jpg');
 }
 

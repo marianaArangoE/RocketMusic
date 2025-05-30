@@ -100,19 +100,21 @@ export default function DashboardView() {
   // 5. Render principal
   return (
     <div className="dashboard-content">
-        <div className="welcome-header">
-    <h1>
-       <img
-         src={mimikyuIcon}
-         alt="Mimikyu"
-         className="mimikyu-icon"
-       />
-       Bienvenido/a, {spotifyProfile.display_name}
-     </h1>
-     </div>
+      <div className="welcome-header">
+        <h1>
+          <img
+            src={mimikyuIcon}
+            alt="Mimikyu"
+            className="mimikyu-icon"
+          />
+          Bienvenido/a, {spotifyProfile.display_name}
+        </h1>
+      </div>
+
+      
       <div className="dashboard-controls" style={{ marginBottom: '1rem', display: 'flex', gap: '1rem' }}>
         <button className="button" onClick={loadDashboardData}>
-           Actualizar
+          Actualizar
           <span className="hoverEffect">
             <div />
           </span>

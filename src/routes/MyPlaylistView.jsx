@@ -86,7 +86,7 @@ export default function MyPlaylistView() {
         <p>No se encontraron playlists.</p>
       ) : (
         <div className="dash-cards-container">
-          {playlists.slice(0, 20).map((pl) => (
+          {playlists.map((pl) => (
             <div key={pl.id} className="dash-card">
               <img
                 src={pl.images?.[0]?.url || 'https://via.placeholder.com/150'}

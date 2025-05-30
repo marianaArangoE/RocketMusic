@@ -146,7 +146,7 @@ export default function PlaylistDetailView() {
       </div>
 
       <ul className="track-list">
-        {tracks.map(track => (
+        {tracks.slice(0,20).map(track => (
           <li key={track.id} className="track-item">
             <div className="track-row">
               <img

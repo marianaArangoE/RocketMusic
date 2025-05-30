@@ -2,12 +2,16 @@
 .dashboard-content {
   position: relative;
   z-index: 1;
-  min-height: 100vh;        /* ocupa toda la altura del viewport */
-  overflow: hidden;          /* desactiva el scroll */
+  min-height: 100vh;
+  /* ocupa toda la altura del viewport */
+  overflow: hidden;
+  /* desactiva el scroll */
   display: flex;
   flex-direction: column;
-  align-items: center;       /* centra horizontalmente todo su contenido */
-  padding: 2rem 1rem;        /* mantén algo de padding */
+  align-items: center;
+  /* centra horizontalmente todo su contenido */
+  padding: 2rem 1rem;
+  /* mantén algo de padding */
 }
 
 /* ── Grid de 3 columnas fijas, centrado ── */
@@ -17,7 +21,8 @@
   gap: 1.5rem;
   justify-content: center;
   width: 100%;
-  max-width: calc(3 * 260px + 2 * 1.5rem); /* 3 cards de 260px + gaps */
+  max-width: calc(3 * 260px + 2 * 1.5rem);
+  /* 3 cards de 260px + gaps */
   margin: 0 auto;
   position: relative;
   z-index: 1;
@@ -35,11 +40,13 @@
   color: #252525;
   box-shadow:
     4px 4px 12px rgba(0, 0, 0, 0.1),
-   -4px -4px 12px rgba(255, 255, 255, 0.7);
+    -4px -4px 12px rgba(255, 255, 255, 0.7);
   display: flex;
   flex-direction: column;
-  align-items: center;      /* centra la imagen y el texto */
-  text-align: center;       /* alinea el texto */
+  align-items: center;
+  /* centra la imagen y el texto */
+  text-align: center;
+  /* alinea el texto */
   justify-content: space-between;
   cursor: pointer;
   transition: transform .3s ease, box-shadow .3s ease;
@@ -71,6 +78,7 @@
   text-shadow: 0 0 4px var(--console-color);
   animation: neonGlow 1.5s ease-in-out infinite alternate;
 }
+
 .dash-card h3:hover {
   animation-duration: 0.8s;
 }
@@ -82,15 +90,22 @@
   text-decoration: none;
   font-size: 0.9rem;
 }
+
 .dash-card a:hover {
   text-decoration: underline;
 }
 
 /* ── Keyframes glow ── */
 @keyframes neonGlow {
-  from { text-shadow: 0 0 4px var(--console-color); }
-  to   { text-shadow: 0 0 12px var(--console-color); }
+  from {
+    text-shadow: 0 0 4px var(--console-color);
+  }
+
+  to {
+    text-shadow: 0 0 12px var(--console-color);
+  }
 }
+
 /* —— Header de bienvenida —— */
 .welcome-header {
   display: flex;
@@ -101,18 +116,22 @@
   position: relative;
   z-index: 1;
 }
+
 .welcome-header h1 {
   margin: 0;
   font-size: 2rem;
   font-weight: 700;
-  color: #ffffff;               /* texto blanco */
-  text-shadow: 0 0 6px rgba(0,0,0,0.6);
+  color: #ffffff;
+  /* texto blanco */
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
   text-align: center;
 }
+
 .mimikyu-icon {
-  width: 56px;                  /* un pelín más grande */
+  width: 56px;
+  /* un pelín más grande */
   height: 56px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   border-radius: 50%;
 }
 
@@ -129,16 +148,19 @@
   transition: transform 0.1s ease;
   font-weight: bold;
   cursor: pointer;
-  color: #ffffff;               /* texto blanco */
+  color: #ffffff;
+  /* texto blanco */
   background: var(--console-color);
   z-index: 0;
-  box-shadow: 0 0px 7px -5px rgba(0,0,0,0.5);
+  box-shadow: 0 0px 7px -5px rgba(0, 0, 0, 0.5);
 }
+
 .button:hover {
-  background: rgba(193, 228, 248, 0.8);
+  background:var(--hover-gradient);
   color: rgb(33, 0, 85);
   transform: scale(1.03);
 }
+
 .button:active {
   transform: scale(0.97);
 }
@@ -152,13 +174,9 @@
   justify-content: center;
   z-index: 1;
 }
+
 .hoverEffect div {
-  background: linear-gradient(
-    90deg,
-    rgba(222,0,75,1)   0%,
-    rgba(191,70,255,1) 49%,
-    rgba(0,212,255,1)  100%
-  );
+  background: var(--hover-gradient);
   border-radius: 40rem;
   width: 10rem;
   height: 10rem;
@@ -167,13 +185,20 @@
   animation: effect 3s linear infinite;
   opacity: 0.5;
 }
+
 .button:hover .hoverEffect div {
   width: 8rem;
   height: 8rem;
 }
+
 @keyframes effect {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* —— Título de sección centrado y blanco —— */
@@ -182,12 +207,13 @@
   font-size: 1.6rem;
   color: #ffffff;
   margin-bottom: 1.5rem;
-  text-shadow: 0 0 6px rgba(0,0,0,0.6);
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
 }
 
 .dashboard-controls {
   width: 100%;
   display: flex;
-  justify-content: center;   /* centra el botón */
+  justify-content: center;
+  /* centra el botón */
   margin-bottom: 2rem;
 }

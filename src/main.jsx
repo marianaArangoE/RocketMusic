@@ -7,7 +7,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import './theme.css';
 import './index.css';
 import Layout from './uicomponents/Layout';
-import './styles/Layout.css';
+// import './styles/Layout.css';
 
 import SpotifyLoginView from './routes/SpotifyLoginView';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
